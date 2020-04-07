@@ -4,41 +4,8 @@
       <img :src="logoPath" />
     </div>
     <div class="plant-text">
-      供应链云仓库管理系统{{development ? '【开发环境】': ''}}
+      陪练管理系统{{development ? '【开发环境】': ''}}
     </div>
-    <ul class="top-nav">
-      <li>
-        <a
-          :href="dataUrl"
-          @click="dataRoute"
-          target="_blank"
-        >报表</a>
-      </li>
-    </ul>
-    <el-dropdown
-      class="avatar-container warehouse"
-      @command="handleCommand"
-    >
-      <div class="avatar-wrapper">
-        <span class="welcome">
-          {{warehouseName}}<i class="el-icon-caret-bottom"></i>
-        </span>
-      </div>
-      <el-dropdown-menu
-        class="user-dropdown"
-        slot="dropdown"
-      >
-        <el-dropdown-item
-          :command="item.warehouseNo"
-          divided
-          v-for="item in warehouseMap"
-          :disabled="warehouse==item.warehouseNo"
-          :key="item.warehouseNo"
-        >
-          {{item.warehouseName}}
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
     <el-dropdown
       class="avatar-container"
       trigger="click"

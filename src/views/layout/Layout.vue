@@ -18,21 +18,6 @@
         </el-col>
       </el-row>
       <app-main></app-main>
-      <div
-        class="warehouseBox"
-        v-if="showWarehouse"
-      >
-        <div class="warehouseBox_alert">
-          <div class="warehouseBox_alert_title">仓库选择</div>
-          <ul>
-            <li
-              v-for="item in $store.getters.warehouseMap"
-              :key="item.warehouseNo"
-              @click="choosewarehouse(item)"
-            >{{item.warehouseName}}</li>
-          </ul>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -52,7 +37,6 @@ export default {
 
   data() {
     return {
-      showWarehouse: !sessionStorage.getItem('warehouse')
     }
   },
 
@@ -63,23 +47,9 @@ export default {
   },
   methods: {
     totallist() {
-      todolist().then(res => {
-        if (res) {
-          this.$store.dispatch('setTodolist', res.data)
-        }
-      })
     },
     choosewarehouse(value) {
-      setWarehouseCode({
-        operaterId: this.$store.getters.userInfo.id,
-        warehouseCode: value.warehouseNo
-      }).then(res => {
-        if (res) {
-          this.showWarehouse = false;
-          this.$store.dispatch('SetWarehouse', value.warehouseNo)
-          this.totallist()
-        }
-      })
+
     },
   },
 }
