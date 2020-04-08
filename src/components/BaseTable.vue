@@ -475,8 +475,8 @@ export default {
           data = obj.data
           total = obj.total
         } else {
-          data = res.data.list || []
-          total = res.data.total
+          data = res.list || []
+          total = res.total
         }
         data.forEach(item => {
           item._batchNoDetailLoading = false

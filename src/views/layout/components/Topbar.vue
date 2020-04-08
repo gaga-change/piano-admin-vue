@@ -4,14 +4,14 @@
       <img :src="logoPath" />
     </div>
     <div class="plant-text">
-      陪练管理系统{{development ? '【开发环境】': ''}}
+      后台管理系统{{development ? '【开发环境】': ''}}
     </div>
     <el-dropdown
       class="avatar-container"
       trigger="click"
     >
       <div class="avatar-wrapper">
-        <span class="welcome">欢迎，{{userInfo.nick || userInfo.email}}</span>
+        <span class="welcome">欢迎，{{userInfo.name || ''}}</span>
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu

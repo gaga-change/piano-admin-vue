@@ -91,8 +91,8 @@ export default {
     },
     /** 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || []
-      let total = res.data.total
+      let data = res.list || []
+      let total = res.total
       data.forEach(v => {
         v.keyValueStr = v.keyValue.map(v => `${v.name} - ${v.value}`).join(',')
       })

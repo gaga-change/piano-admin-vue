@@ -1,10 +1,10 @@
 'use strict'
 
 const path = require('path')
-let ip = 'http://192.168.1.37:8787'; // 测试环境
-let ip2 = 'http://192.168.2.117:8680'; // 本地测试
+// let ip = 'http://192.168.1.37:8787'; // 测试环境
+let ip = 'http://192.168.2.117:8680'; // 本地测试
 
-const proxyTableArr = ['/webApi', '/api', '/app']
+const proxyTableArr = ['/api']
 let proxyTable = {}
 
 proxyTableArr.forEach(item => {
@@ -14,11 +14,11 @@ proxyTableArr.forEach(item => {
   }
 })
 
-proxyTable['/gaga'] = {
-  target: ip2,
-  pathRewrite: { '^/gaga': '/' },
-  changeOrigin: true
-}
+// proxyTable['/gaga'] = {
+//   target: ip2,
+//   pathRewrite: { '^/gaga': '/' },
+//   changeOrigin: true
+// }
 // proxyTable['/config'] = {
 //   target: 'http://csj-shark-vue-test.dev.csj361.com',
 //   changeOrigin: true

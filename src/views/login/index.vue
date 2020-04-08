@@ -13,7 +13,7 @@
         <h3
           class="title"
           style="font-size:16px !important;"
-        >供应链云仓库管理系统</h3>
+        >四分音艺术后台管理系统</h3>
         <div v-if="usernameSubmit">
           <el-form-item prop="username">
             <span class="svg-container svg-container_login">
@@ -116,11 +116,9 @@ export default {
         if (valid) {
           this.loading = true
           userlogin(this.loginForm).then(res => {
-
             if (!res) {
               return this.loading = false
             } else {
-              // return this.loading = false
               location.href = '/'
             }
           })

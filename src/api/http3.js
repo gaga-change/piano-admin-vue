@@ -12,30 +12,10 @@ let newAxios = axios.create({
 newAxios.interceptors.response.use(function (response) {
   let data = response.data
   // 系统异常提示（返回的数据为 null）
-  if (data.code === 'user-not-login' || data.code === 'shark-512' || data.code == '501') {
-    Message({
-      type: 'error',
-      message: '登录失效，请重新登录',
-      onClose: () => {
-        sessionStorage.setItem('warehouse', '')
-        location.href = `/login`
-      },
-      duration: 1500
-    })
-    data = null
-  } else if (data.code !== '200' && data.code !== 200) {
-    let message = data.detailError || data.message || data.errorMsg || ''
-    Message({
-      type: 'error',
-      message: message || '系统异常',
-      duration: 3000
-    })
-    data = null
-  }
+
   return data
 }, function (error) {
-  let data = error.response.data
-  let message = data.detailError || data.message || data.errorMsg || ''
+  let message = error.response.data
   if (error.message === 'timeout of 1500ms exceeded') {
     Notification({
       title: '错误信息',
@@ -48,12 +28,10 @@ newAxios.interceptors.response.use(function (response) {
       type: 'error',
       message: message || '登录失效，请重新登录',
       onClose: () => {
-        sessionStorage.setItem('warehouse', '')
         location.href = `/login`
       },
       duration: 1500
     })
-    data = null
   } else {
     Message({
       type: 'error',
@@ -66,17 +44,17 @@ newAxios.interceptors.response.use(function (response) {
 
 
 const http = {
-  get(...params) {
-    return newAxios.get({ params }).then(res => res).catch(err => null)
+  get(url, params) {
+    return newAxios.get(url, { params }).then(res => res).catch(err => null)
   },
-  post(...params) {
-    return newAxios.post(...params).then(res => res).catch(err => null)
+  post(url, params) {
+    return newAxios.post(url, params).then(res => res).catch(err => null)
   },
-  delete(...params) {
-    return newAxios.delete({ params }).then(res => res).catch(err => null)
+  delete(url, params) {
+    return newAxios.delete(url, { params }).then(res => res).catch(err => null)
   },
-  put(...params) {
-    return newAxios.put(...params).then(res => res).catch(err => null)
+  put(url, params) {
+    return newAxios.put(url, params).then(res => res).catch(err => null)
   }
 }
 

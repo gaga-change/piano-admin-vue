@@ -13,11 +13,11 @@ router.beforeEach((to, from, next) => {
   } else if (store.getters.userInfo == null) {
     store.dispatch('GetInfo').then(res => {
       if (res) {
-        store.dispatch('gitMap');
-        router.addRoutes(store.getters.menu)
-        next({ ...to, replace: true })
+        store.dispatch('gitMap')
+        next()
+        //   next({ ...to, replace: true })
       } else {
-        store.dispatch('SetWarehouse', '')
+        //   store.dispatch('SetWarehouse', '')
         location.href = `/login`
       }
     })

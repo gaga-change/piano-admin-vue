@@ -7,11 +7,20 @@ export * from './config'
 export * from './app'
 
 /** 商品列表 */
-export const commodityList = params => http3.get(`/gaga/api/commodity`, params)
-export const commodityCreate = params => http3.post(`/gaga/api/commodity`, params)
-export const commodityDetail = id => http3.get(`/gaga/api/commodity/${id}`)
-export const commodityDel = id => http3.delete(`/gaga/api/commodity/${id}`)
-export const commodityModify = (id, params) => http3.put(`/gaga/api/commodity/${id}`, params)
+export const commodityList = params => http3.get(`/api/commodity`, params)
+export const commodityCreate = params => http3.post(`/api/commodity`, params)
+export const commodityDetail = id => http3.get(`/api/commodity/${id}`)
+export const commodityDel = id => http3.delete(`/api/commodity/${id}`)
+export const commodityModify = (id, params) => http3.put(`/api/commodity/${id}`, params)
+
+
+
+/** 登录 */
+export const userlogin = params => http3.post(`/api/auth/login`, params)
+/** 退出登录 */
+export const logout = () => http3.get(`/api/auth/logout`)
+/** 获取用户信息 */
+export const getInfo = () => http3.get(`/api/auth/account`)
 
 
 /** 导出库位库存 */
@@ -29,8 +38,7 @@ export const uploadReportFile = (formData, options = {}) => http.post('/webApi/p
   },
   ...options
 })
-/** 获取用户信息 */
-export const getInfo = params => http.get(`/webApi/base/user/info`, { params })
+
 /** 用户登录选择仓库后绑定选择的仓库 */
 export const setWarehouseCode = params => http.get(`/webApi/base/user/setWarehouseCode`, { params })
 /** 获取代办 */
@@ -268,7 +276,3 @@ export const deleteSkuById = params => http.get(`/webApi/basic/sku/deleteSkuById
 export const addInWarehousePlan = params => http.post(`/webApi/plan/in/addInWarehousePlan`, params)
 /** 新增出库计划单 */
 export const addOutWarehousePlan = params => http.post(`/webApi/plan/out/addOutWarehousePlan`, params)
-/** 登录 */
-export const userlogin = params => http.post(`/api/sso/login`, params)
-/** 退出登录 */
-export const logout = () => http.get(`/api/sso/logout`)
