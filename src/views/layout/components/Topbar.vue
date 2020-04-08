@@ -27,12 +27,12 @@
           </el-dropdown-item>
         </router-link>
 
-        <el-dropdown-item divided>
+        <!-- <el-dropdown-item divided>
           <span
             @click="modifyPasswordShow = true"
             style="display:block;"
           >修改密码</span>
-        </el-dropdown-item>
+        </el-dropdown-item> -->
         <el-dropdown-item divided>
           <span
             @click="logout"
@@ -279,9 +279,8 @@ export default {
       }).then(action => {
         if (action === 'confirm') {
           logout()
-          this.$store.dispatch('SetWarehouse', '')
-          this.$store.dispatch('setTodolist', '')
-          location.href = `/login`
+          this.$router.push('/login')
+          // location.href = `/login`
         }
       }).catch(() => { })
     }

@@ -18,7 +18,7 @@ export const commodityModify = (id, params) => http3.put(`/api/commodity/${id}`,
 /** 登录 */
 export const userlogin = params => http3.post(`/api/auth/login`, params)
 /** 退出登录 */
-export const logout = () => http3.get(`/api/auth/logout`)
+export const logout = () => http3.post(`/api/auth/logout`)
 /** 获取用户信息 */
 export const getInfo = () => http3.get(`/api/auth/account`)
 

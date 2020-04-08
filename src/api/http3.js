@@ -10,10 +10,9 @@ let newAxios = axios.create({
 
 // 响应拦截器
 newAxios.interceptors.response.use(function (response) {
-  let data = response.data
-  // 系统异常提示（返回的数据为 null）
-
-  return data
+  console.log(response)
+  if (response.status === 204) return {}
+  return response.data
 }, function (error) {
   let message = error.response.data
   if (error.message === 'timeout of 1500ms exceeded') {
@@ -24,14 +23,7 @@ newAxios.interceptors.response.use(function (response) {
       duration: 5000,
     })
   } if (error.response.status === 401) {
-    Message({
-      type: 'error',
-      message: message || '登录失效，请重新登录',
-      onClose: () => {
-        location.href = `/login`
-      },
-      duration: 1500
-    })
+    location.href = `/login`
   } else {
     Message({
       type: 'error',
