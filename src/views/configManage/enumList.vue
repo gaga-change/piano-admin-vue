@@ -117,7 +117,7 @@ export default {
     },
     /** 导出 */
     handleOutput() {
-      window.open('/config/enums.json')
+      window.open('/api/enumsTotal')
     }
   }
 }

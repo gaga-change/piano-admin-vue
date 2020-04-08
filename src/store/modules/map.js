@@ -1,5 +1,4 @@
-// import { enumsTotal } from '@/api'
-import enums from '../enums.json'
+import { enumsTotal } from '@/api'
 
 const map = {
   state: {
@@ -28,8 +27,8 @@ const map = {
 
 async function config() {
   let config = {};
-  // const data = await enumsTotal()
-  const data = enums
+  const data = await enumsTotal()
+  // const data = enums
   data.forEach(v => {
     config[v.name] = v.keyValue
   })

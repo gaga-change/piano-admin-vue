@@ -15,7 +15,7 @@ export const enumsModify = (id, params) => http.put(`/api/enums/${id}`, params)
 export const enumsDetail = id => http.get(`/api/enums/${id}`)
 export const enumsList = params => http.get(`/api/enums`, params)
 /** 获取所有枚举（简化字段） */
-export const enumsTotal = params => http2.get('/api/enums.json', { params })
+export const enumsTotal = params => http.get('/api/enumsTotal', params)
 
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)
