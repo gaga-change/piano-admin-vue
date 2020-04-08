@@ -19,7 +19,6 @@ import '@/styles/index.scss'
 import App from './App'
 import router from './router'
 import store from './store'
-import '@/icons'
 import '@/permission'
 
 import { EXTENDS } from './assets/extends'

@@ -25,7 +25,6 @@ const user = {
   actions: {
     // 获取用户信息
     GetInfo({ commit, state }) {
-      console.log('GetInfo')
       return getInfo().then(res => {
         if (res) {
           const data = res

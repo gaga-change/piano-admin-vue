@@ -111,7 +111,8 @@
 <script>
 import logoPath from '@/assets/images/logo.png'
 import { mapGetters } from 'vuex'
-import { updatepassword, setWarehouseCode, todolist, logout } from '@/api'
+// import { setWarehouseCode, todolist, logout } from '@/api'
+import { logout } from '@/api'
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -198,74 +199,28 @@ export default {
     }
   },
   mounted() {
-    const that = this
-    var script = document.createElement('script')
-    script.type = 'text/javascript'
-    script.id = 'otherdatascript'
-    script.src = `http://bi.csjmro.com/WebReport/ReportServer?op=fs_load&cmd=sso&fr_username=${this.userInfo.email}&fr_password=${this.userInfo.password}&validity=-1&callback=fwie`
-    document.body.appendChild(script)
-    window.fwie = function (data) {
-      if (data.url) {
-        that.dataUrl = data.url
-      }
-      // 成功后删除script及回调方法
-      const script = document.getElementById('otherdatascript')
-      document.body.removeChild(script)
-      delete window['fwie']
-    }
   },
   methods: {
-    dataRoute() {
-      if (!this.dataUrl) {
-        this.$message('同步登录BI失败，无法跳转，请刷新页面重试')
-      }
-    },
-    handleCommand(command) {
-      this.warehouse = command
-      this.setWarehouse()
-    },
     totallist() {
-      todolist().then(res => {
-        if (res && res.data) {
-          this.$store.dispatch('setTodolist', res.data)
-        }
-      })
-    },
-    setWarehouse() {
-      var warehouse = this.warehouse;
-      if (!warehouse) {
-        this.$message({
-          type: 'info',
-          message: '请选择仓库'
-        })
-        return false
-      }
-      setWarehouseCode({ operaterId: this.userInfo.id, warehouseCode: warehouse }).then(res => {
-        if (res) {
-          this.totallist()
-          this.$store.dispatch('SetWarehouse', warehouse).then(res => {
-            this.$message({ type: 'success', message: '切换仓库成功' })
-            this.$store.dispatch('delAllViews')
-            this.$router.push('/')
-          })
-        } else {
-          this.warehouse = this.preWarehouse
-        }
-      })
+      // todolist().then(res => {
+      //   if (res && res.data) {
+      //     this.$store.dispatch('setTodolist', res.data)
+      //   }
+      // })
     },
     modifyPassword() {
       this.$refs.ruleForm2.validate((valid) => {
         if (valid) {
-          updatepassword({
-            userId: this.userInfo.id,
-            oldPw: this.form.oldpassword,
-            newPw: this.form.newpassword
-          }).then(res => {
-            if (res) {
-              this.$message.success('修改密码成功')
-              this.modifyPasswordShow = false
-            }
-          })
+          // updatepassword({
+          //   userId: this.userInfo.id,
+          //   oldPw: this.form.oldpassword,
+          //   newPw: this.form.newpassword
+          // }).then(res => {
+          //   if (res) {
+          //     this.$message.success('修改密码成功')
+          //     this.modifyPasswordShow = false
+          //   }
+          // })
         } else {
           return false
         }

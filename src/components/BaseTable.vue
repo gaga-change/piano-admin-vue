@@ -105,39 +105,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-else-if="item.type === 'batchNoPopover'"
-          :formatter="item.formatter"
-          :fixed="item.fixed"
-          :type="item.columnType"
-          :width="item.width"
-          :key="item.lable"
-          :prop="item.prop"
-          :label="item.label"
-        >
-          <template slot-scope="scope">
-            <el-popover
-              placement="top-start"
-              :title="`批次：${scope.row[item.prop]}`"
-              width="400"
-              trigger="hover"
-              @show="handleBatchNoPopoverShow(scope.row, scope.row[item.prop])"
-            >
-              <div v-loading="scope.row._batchNoDetailLoading">
-                <div
-                  v-for="(val, key) in scope.row._batchNoDetail"
-                  :key="key"
-                >
-                  {{key}}：{{val||''}}
-                </div>
-              </div>
-              <el-link
-                type="primary"
-                slot="reference"
-              >{{scope.row[item.prop]}}</el-link>
-            </el-popover>
-          </template>
-        </el-table-column>
-        <el-table-column
           v-else
           :formatter="item.formatter"
           :fixed="item.fixed"
@@ -192,7 +159,6 @@
 
 import moment from 'moment';
 import { mapGetters } from 'vuex'
-import { selectLotDetailValue } from '@/api'
 
 export default {
   props: {
@@ -427,19 +393,6 @@ export default {
         }
       })
       this.tableConfig = tableConfig;
-    },
-    /** 批次内容展示 */
-    handleBatchNoPopoverShow(row, batchNo) {
-      this.$set(row, '_batchNoDetailLoading', true)
-      // row._batchNoDetailLoading = true
-      selectLotDetailValue({ batchNo }).then(res => {
-        // row._batchNoDetailLoading = false
-        this.$set(row, '_batchNoDetailLoading', false)
-        if (!res) return
-        // row._batchNoDetail = res.data.lotDetails
-        this.$set(row, '_batchNoDetail', res.data.lotDetails)
-
-      })
     },
     /** 展开或收拢 所有子表 */
     toggleRowExpansionAll(expanded) {
