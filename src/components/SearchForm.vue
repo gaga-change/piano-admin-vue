@@ -48,7 +48,7 @@
                 v-for="(item, index) in mapConfig[item.enum]"
                 :key="index"
                 :label="item.name"
-                :value="item.value + ''"
+                :value="item.value"
               >
               </el-option>
             </el-select>

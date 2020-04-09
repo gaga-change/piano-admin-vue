@@ -414,10 +414,16 @@ export default {
     },
     fetchData() {
       this.selfLoading = true
+      let temp = this.$copy(this.searchParams)
+      Object.keys(temp).forEach(key => {
+        if (temp[key] === undefined || temp[key] === '') {
+          delete temp[key]
+        }
+      })
       return this.api({
         pageNum: this.selfCurrentPage,
         pageSize: this.selfPageSize,
-        ...this.searchParams
+        ...temp
       }).then(res => {
         this.selfLoading = false
         if (!res) return
