@@ -4,22 +4,6 @@ import Layout from '../../views/layout/Layout'
 
 export default [
   {
-    path: '/commodity',
-    component: Layout,
-    redirect: 'commodity/commodityList',
-    meta: { title: '商品管理', noCache: true, icon: 'deliver' },
-    hidden: false,
-    children: [
-      {
-        name: 'commodityList',
-        path: 'commodityList',
-        meta: { title: '商品列表', noCache: true },
-        component: _import('commodity/commodityList'),
-        hidden: false,
-      },
-    ]
-  },
-  {
     path: '/teacher',
     component: Layout,
     redirect: 'teacherList',
@@ -31,6 +15,22 @@ export default [
         path: 'teacherList',
         meta: { title: '教师列表', noCache: true },
         component: _import('teacher/teacherList'),
+        hidden: false,
+      },
+    ]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    redirect: 'studentList',
+    meta: { title: '学生管理', noCache: true, icon: 'deliver' },
+    hidden: false,
+    children: [
+      {
+        name: 'studentList',
+        path: 'studentList',
+        meta: { title: '学生列表', noCache: true },
+        component: _import('student/studentList'),
         hidden: false,
       },
     ]

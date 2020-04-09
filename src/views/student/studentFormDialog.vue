@@ -2,7 +2,7 @@
   <div class="">
     <!-- 600px【小型，单列】 70% 【中型，双列】-->
     <el-dialog
-      :title="`${rowData._id ? '修改' : '新建'}教师`"
+      :title="`${rowData._id ? '修改' : '新建'}学生`"
       :visible="visible"
       width="400px"
       :before-close="handleClose"
@@ -43,11 +43,7 @@
 const formConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
-  { label: "学校", prop: "school" },
-  { label: "专业", prop: "major" },
-  { label: "等级", prop: "grade", type: "enum", enum: "teacherGrade" },
-  { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "studentStatus" },
   { label: "openid", prop: "openid" },
   { label: "备注", prop: "remark" }
 ];
@@ -59,6 +55,7 @@ const rules = {
     { required: true, message: "必填项", trigger: ["blur", "change"] }
   ],
   status: [{ required: true, message: "必填项", trigger: ["blur", "change"] }]
+
 };
 /**
  * 父级设置
@@ -68,7 +65,7 @@ const rules = {
       @submited="getTableData()"
     />
  */
-import { teachersAdd, teachersModify } from "@/api";
+import { studentsAdd, studentsModify } from "@/api";
 export default {
   props: {
     visible: {
@@ -113,7 +110,7 @@ export default {
     /** 确定 */
     confirm() {
       const isModify = this.row && this.row._id;
-      const api = isModify ? teachersModify : teachersAdd;
+      const api = isModify ? studentsModify : studentsAdd;
       this.$refs["form"].validate((valid, params) => {
         if (valid) {
           this.loading = true;

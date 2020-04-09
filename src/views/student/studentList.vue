@@ -13,7 +13,7 @@
           type="primary"
           @click="
             selectedRow = scope.row;
-            teacherFormDialogVisible = true;
+            studentFormDialogVisible = true;
           "
         >修改</el-link>
         <el-divider direction="vertical"></el-divider>
@@ -28,15 +28,15 @@
           size="mini"
           @click="
             selectedRow = null;
-            teacherFormDialogVisible = true;
+            studentFormDialogVisible = true;
           "
         >
-          新建教师
+          新建学生
         </el-button>
       </template>
     </base-list>
-    <teacherFormDialog
-      :visible.sync="teacherFormDialogVisible"
+    <studentFormDialog
+      :visible.sync="studentFormDialogVisible"
       :row="selectedRow"
       @submited="getTableData()"
     />
@@ -44,16 +44,12 @@
 </template>
 
 <script>
-import { teachersList, teachersDel } from "@/api";
-import teacherFormDialog from "./teacherFormDialog";
+import { studentsList, studentsDel } from "@/api";
+import studentFormDialog from "./studentFormDialog";
 const tableConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
-  { label: "学校", prop: "school" },
-  { label: "专业", prop: "major" },
-  { label: "等级", prop: "grade", type: "enum", enum: "teacherGrade" },
-  { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "studentStatus" },
   { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
   { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
   { label: "备注", prop: "remark" }
@@ -61,18 +57,17 @@ const tableConfig = [
 const searchConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
-  { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" }
+  { label: "状态", prop: "status", type: "enum", enum: "studentStatus" },
 ];
 export default {
-  components: { teacherFormDialog },
+  components: { studentFormDialog },
   data() {
     return {
-      teacherFormDialogVisible: false,
+      studentFormDialogVisible: false,
       selectedRow: null,
       tableConfig,
       searchConfig,
-      listApi: teachersList,
+      listApi: studentsList,
       // 可选 附加查询条件
       appendSearchParams: {}
     };
@@ -98,7 +93,7 @@ export default {
     },
     /** 删除 */
     handleDelete(row) {
-      this.$apiConfirm(`是否确定删除【${row.name}】？`, () => teachersDel(row._id)).then(res => {
+      this.$apiConfirm(`是否确定删除【${row.name}】？`, () => studentsDel(row._id)).then(res => {
         if (!res) return
         this.$message.success('操作成功！')
         this.getTableData()
