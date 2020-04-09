@@ -1,0 +1,8 @@
+{
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "vetur.format.defaultFormatter.js": "vscode-typescript"
+}

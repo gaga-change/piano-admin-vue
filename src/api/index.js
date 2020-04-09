@@ -7,7 +7,6 @@ export const commodityModify = (id, params) => http.put(`/api/commodity/${id}`, 
 export const commodityDetail = id => http.get(`/api/commodity/${id}`)
 export const commodityList = params => http.get(`/api/commodity`, params)
 
-
 /** 枚举接口 */
 export const enumsAdd = params => http.post(`/api/enums`, params)
 export const enumsDel = id => http.delete(`/api/enums/${id}`)
@@ -16,6 +15,13 @@ export const enumsDetail = id => http.get(`/api/enums/${id}`)
 export const enumsList = params => http.get(`/api/enums`, params)
 /** 获取所有枚举（简化字段） */
 export const enumsTotal = params => http.get('/api/enumsTotal', params)
+
+/** 老师接口 */
+export const teachersAdd = params => http.post(`/api/teachers`, params)
+export const teachersDel = id => http.delete(`/api/teachers/${id}`)
+export const teachersModify = (id, params) => http.put(`/api/teachers/${id}`, params)
+export const teachersDetail = id => http.get(`/api/teachers/${id}`)
+export const teachersList = params => http.get(`/api/teachers`, params)
 
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)

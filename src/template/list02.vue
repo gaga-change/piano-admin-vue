@@ -21,7 +21,7 @@
           size="mini"
           @click="handleCreate"
         >
-          新建质检记录
+          新建
         </el-button>
       </template>
     </base-list>
@@ -33,9 +33,10 @@ import { checkOrderList } from '@/api'
 const tableConfig = [
   { label: '质检单号 ', prop: 'orderCode', width: 140 },
   { label: '收货单号 ', prop: 'receiveOrderCode', width: 140 },
-  { label: '创建人', prop: 'createrName' },
-  { label: '创建时间', prop: 'gmtCreate', type: 'time', width: 140 },
   { label: '是否虚拟区', prop: 'isVirtual', type: 'enum', enum: 'yesOrNoEnum' },
+  { label: '创建时间', prop: 'createdAt', type: 'time', width: 140 },
+  { label: '修改时间', prop: 'updatedAt', type: 'time', width: 140 },
+  { label: '备注', prop: 'remark' },
 ]
 const searchConfig = [
   { label: '质检单号', prop: 'orderCode' },

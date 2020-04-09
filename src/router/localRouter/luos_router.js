@@ -20,6 +20,22 @@ export default [
     ]
   },
   {
+    path: '/teacher',
+    component: Layout,
+    redirect: 'teacherList',
+    meta: { title: '教师管理', noCache: true, icon: 'deliver' },
+    hidden: false,
+    children: [
+      {
+        name: 'teacherList',
+        path: 'teacherList',
+        meta: { title: '教师列表', noCache: true },
+        component: _import('teacher/teacherList'),
+        hidden: false,
+      },
+    ]
+  },
+  {
     path: '/configManage',
     component: Layout,
     redirect: 'enumList',

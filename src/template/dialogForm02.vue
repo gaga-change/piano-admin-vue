@@ -2,7 +2,7 @@
   <div class="">
     <!-- 600px【小型，单列】 70% 【中型，双列】-->
     <el-dialog
-      title="新建仓库"
+      :title="`${rowData._id ? '修改':'新建'}`"
       :visible="visible"
       width="400px"
       :before-close="handleClose"
