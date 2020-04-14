@@ -19,6 +19,14 @@
         <el-divider direction="vertical"></el-divider>
         <el-link
           type="primary"
+          @click="
+            selectedRow = scope.row;
+            setSpaceRuleDialogVisible = true;
+          "
+        >空闲时段</el-link>
+        <el-divider direction="vertical"></el-divider>
+        <el-link
+          type="primary"
           @click="handleDelete(scope.row)"
         >删除</el-link>
       </template>
@@ -40,12 +48,22 @@
       :row="selectedRow"
       @submited="getTableData()"
     />
+    <template v-if="setSpaceRuleDialogVisible">
+      <setSpaceRuleDialog
+        :visible.sync="setSpaceRuleDialogVisible"
+        :row="selectedRow"
+        type="student"
+        @submited="getTableData()"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import { studentsList, studentsDel } from "@/api";
 import studentFormDialog from "./studentFormDialog";
+import setSpaceRuleDialog from "../teacher/setSpaceRuleDialog"
+
 const tableConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
@@ -60,10 +78,11 @@ const searchConfig = [
   { label: "状态", prop: "status", type: "enum", enum: "studentStatus" },
 ];
 export default {
-  components: { studentFormDialog },
+  components: { studentFormDialog, setSpaceRuleDialog },
   data() {
     return {
       studentFormDialogVisible: false,
+      setSpaceRuleDialogVisible: false,
       selectedRow: null,
       tableConfig,
       searchConfig,

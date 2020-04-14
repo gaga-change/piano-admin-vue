@@ -23,6 +23,14 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
+
+/** 时间规则接口 */
+export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
+export const spaceRulesDel = id => http.delete(`/api/spaceRules/${id}`)
+export const spaceRulesModify = (id, params) => http.put(`/api/spaceRules/${id}`, params)
+export const spaceRulesDetail = id => http.get(`/api/spaceRules/${id}`)
+export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
+
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)
 /** 退出登录 */
