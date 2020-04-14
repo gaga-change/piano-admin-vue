@@ -52,7 +52,19 @@
 
             </el-form-item>
           </div>
-
+          <el-form-item label="自动识别">
+            <el-input
+              v-model="spaceAreaRuleString"
+              type="textarea"
+              placeholder="将用户发送的空闲时间规则复制到此处，点击识别"
+              show-word-limit
+            >
+            </el-input>
+            <el-link
+              type="primary"
+              @click="authRule"
+            >识别</el-link>
+          </el-form-item>
         </el-form>
       </div>
       <span
@@ -155,6 +167,7 @@ export default {
       WEEK,
       loading: false,
       initLoading: true,
+      spaceAreaRuleString: "",
       formData: {
         //  ... 表单字段
         spaceRules: [],
@@ -181,10 +194,67 @@ export default {
     this.init()
   },
   methods: {
+    // 自动识别规则
+    authRule() {
+      const _trunDate = str => {
+        let temp = str.split(':')
+        let hours = Number(temp[0])
+        let m = Number(temp[0])
+        let d = new Date()
+        d.setHours(hours)
+        d.setMinutes(m)
+        return d
+      }
+      // let temp = '周一 18:00-22:00 周二 18:00-22:00  周三 18:00-22:00  周四  周五 18:05-22:10  周六 07:00-12:00 13:00-17:00 18:00-22:00 周日 07:00-12:00 13:00-17:00 18:00-22:00'
+      let temp = this.spaceAreaRuleString
+      let areas = [
+        /周一(.*)周二/.exec(temp),
+        /周二(.*)周三/.exec(temp),
+        /周三(.*)周四/.exec(temp),
+        /周四(.*)周五/.exec(temp),
+        /周五(.*)周六/.exec(temp),
+        /周六(.*)周日/.exec(temp),
+        /周日(.*)/.exec(temp),
+      ]
+      let err = ''
+      areas = areas.map(item => {
+        if (item && item.length > 1) {
+          return item[1].trim()
+        } else {
+          err = '内容格式有误'
+          return ""
+        }
+      })
+      if (err) {
+        return this.$message.error(err)
+      }
+      this.formData.spaceRules = []
+      for (let i = 0; i < 7; i++) {
+        this.formData.spaceRules.push({
+          areas: []
+        })
+      }
+      areas = areas.map(item => {
+        let area = item.split(' ')
+        area = area.filter(v => v)
+        return area.map(v => {
+          let temp = v.split('-')
+          return [_trunDate(temp[0]), _trunDate(temp[1])]
+        })
+      })
+      // console.log(areas)
+      areas.forEach((item, i) => {
+        item.forEach(v => {
+          this.formData.spaceRules[i].areas.push({
+            value: v
+          })
+        })
+      })
+    },
     // 初始化，恢复时间区间
     init() {
       this.initLoading = true
-      const params = {}
+      const params = { pageSize: 100 }
       params[this.type] = this.rowData._id
       spaceRulesList(params).then(res => {
         this.initLoading = false
@@ -268,26 +338,7 @@ export default {
             await spaceRulesAdd(params)
           }
           this.loading = false
-          return
-          this.loading = true
-          let promiseArr = []
-          this.formData.spaceRules.forEach((item, index) => {
-            item.areas.forEach((area) => {
-              const params = {
-                startTime: area.value[0],
-                endTime: area.value[1],
-                week: index + 1,
-              }
-              params[this.type] = this.rowData._id
-              let temp = spaceRulesAdd(params).then(res => {
-
-              })
-              promiseArr.push(temp)
-            })
-          })
-          Promise.all(promiseArr).then(() => {
-            this.loading = false
-          })
+          this.close()
         }
       })
     },
