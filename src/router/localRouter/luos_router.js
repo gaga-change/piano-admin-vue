@@ -39,7 +39,7 @@ export default [
     path: '/configManage',
     component: Layout,
     redirect: 'enumList',
-    meta: { title: '系统配置中心', noCache: true, icon: 'info' },
+    meta: { title: '系统配置中心', noCache: true },
     hidden: false,
     children: [
       {
@@ -48,7 +48,14 @@ export default [
         meta: { title: '枚举配置', noCache: true },
         component: _import('configManage/enumList'),
         hidden: false,
-      }
+      },
+      {
+        name: 'settingPage',
+        path: 'settingPage',
+        meta: { title: '系统设置', noCache: true },
+        component: _import('setting/settingPage'),
+        hidden: false,
+      },
     ]
   },
 ]

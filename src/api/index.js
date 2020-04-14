@@ -37,3 +37,7 @@ export const userlogin = params => http.post(`/api/auth/login`, params)
 export const logout = () => http.post(`/api/auth/logout`)
 /** 获取用户信息 */
 export const getInfo = () => http.get(`/api/auth/account`)
+/** 微信标签同步 */
+export const wxTeacherTagsSync = () => http.get(`/api/wx/teacher/tagsSync`)
+/** 微信标签同步 */
+export const wxStudentTagsSync = () => http.get(`/api/wx/student/tagsSync`)
