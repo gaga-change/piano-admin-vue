@@ -235,6 +235,9 @@ export default {
       this.visible && this.$emit('update:visible', false)
     },
     handleClose(done) {
+      if (this.visible === false) {
+        return done()
+      }
       this.$confirm('确认关闭？')
         .then(_ => {
           done()
