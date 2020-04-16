@@ -39,7 +39,7 @@ export default [
     path: '/course',
     component: Layout,
     redirect: 'courseList',
-    meta: { title: '课程管理', noCache: true, icon: 'deliver' },
+    meta: { title: '课程管理', noCache: true },
     hidden: false,
     children: [
       {
@@ -49,6 +49,12 @@ export default [
         component: _import('course/courseList'),
         hidden: false,
       },
+      {
+        name: 'spaceAreaList',
+        path: 'spaceAreaList',
+        meta: { title: '空闲时间列表', noCache: true },
+        component: _import('spaceArea/spaceAreaList'),
+      }
     ]
   },
   {

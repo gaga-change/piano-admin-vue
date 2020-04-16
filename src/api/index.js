@@ -30,6 +30,9 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
+/** 空闲时间 */
+export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
+
 
 /** 时间规则接口 */
 export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
