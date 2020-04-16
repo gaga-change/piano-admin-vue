@@ -74,6 +74,43 @@
               :label="item.value"
             >{{item.name}}</el-radio>
           </el-radio-group>
+          <el-time-picker
+            style="width: 200px"
+            :format="item.format || 'HH:mm'"
+            v-else-if="item.type === 'timePicker'"
+            v-model="formData[item.prop]"
+            :placeholder="`请选择${item.label}`"
+          >
+          </el-time-picker>
+          <el-date-picker
+            style="width: 200px"
+            v-else-if="item.type === 'datePicker'"
+            v-model="formData[item.prop]"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            :picker-options="item.pickerOptions || {}"
+          >
+          </el-date-picker>
+          <el-select
+            style="width: 200px"
+            v-else-if="item.type === 'selectRemote'"
+            v-model="formData[item.prop]"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="item.remoteMethod"
+            :loading="item.loading"
+          >
+            <el-option
+              v-for="item in item.list"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
           <!-- 输入框 -->
           <el-input
             v-else

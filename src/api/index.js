@@ -16,6 +16,13 @@ export const teachersModify = (id, params) => http.put(`/api/teachers/${id}`, pa
 export const teachersDetail = id => http.get(`/api/teachers/${id}`)
 export const teachersList = params => http.get(`/api/teachers`, params)
 
+/** 老师接口 */
+export const coursesAdd = params => http.post(`/api/courses`, params)
+export const coursesDel = id => http.delete(`/api/courses/${id}`)
+export const coursesModify = (id, params) => http.put(`/api/courses/${id}`, params)
+export const coursesDetail = id => http.get(`/api/courses/${id}`)
+export const coursesList = params => http.get(`/api/courses`, params)
+
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
 export const studentsDel = id => http.delete(`/api/students/${id}`)

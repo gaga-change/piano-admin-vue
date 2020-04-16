@@ -36,6 +36,22 @@ export default [
     ]
   },
   {
+    path: '/course',
+    component: Layout,
+    redirect: 'courseList',
+    meta: { title: '课程管理', noCache: true, icon: 'deliver' },
+    hidden: false,
+    children: [
+      {
+        name: 'courseList',
+        path: 'courseList',
+        meta: { title: '课程列表', noCache: true },
+        component: _import('course/courseList'),
+        hidden: false,
+      },
+    ]
+  },
+  {
     path: '/configManage',
     component: Layout,
     redirect: 'enumList',
