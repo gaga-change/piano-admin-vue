@@ -32,6 +32,7 @@ Vue.component('BasePrintTable', BasePrintTable);
 Vue.component('DetailItem', DetailItem);
 Vue.component('BaseForm', BaseForm);
 Vue.prototype.$copy = obj => cloneDeep(obj)
+Vue.prototype.$moment = moment
 Vue.prototype.$apiConfirm = (msg, api) => new Promise((resolve, reject) => {
   MessageBox.confirm(msg || '此操作将永久删除该行, 是否继续?', '提示', {
     confirmButtonText: '确定',

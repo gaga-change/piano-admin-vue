@@ -43,6 +43,13 @@ export default [
     hidden: false,
     children: [
       {
+        name: 'autoCrateCourse',
+        path: 'autoCrateCourse',
+        meta: { title: '智能建课', noCache: true },
+        component: _import('course/autoCrateCourse'),
+        hidden: false,
+      },
+      {
         name: 'courseList',
         path: 'courseList',
         meta: { title: '课程列表', noCache: true },
@@ -54,7 +61,8 @@ export default [
         path: 'spaceAreaList',
         meta: { title: '空闲时间列表', noCache: true },
         component: _import('spaceArea/spaceAreaList'),
-      }
+      },
+
     ]
   },
   {
