@@ -2,7 +2,7 @@
 
 const path = require('path')
 // let ip = 'http://192.168.1.37:8787'; // 测试环境
-let ip = 'http://192.168.2.117:8680'; // 本地测试
+let ip = 'http://localhost:8680'; // 本地测试
 
 const proxyTableArr = ['/api']
 let proxyTable = {}

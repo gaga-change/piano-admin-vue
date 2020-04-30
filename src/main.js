@@ -1,27 +1,28 @@
-import Vue from 'vue'
-import ElementUI from 'element-ui'
-import moment from 'moment'
-import { cloneDeep } from 'lodash';
-import locale from 'element-ui/lib/locale/lang/zh-CN'
-import ItemTitle from '@/components/ItemTitle/index'
-import BarCode from '@/components/BarCode/index'
-import BaseTable from '@/components/BaseTable'
-import SearchForm from '@/components/SearchForm'
-import BaseList from '@/components/BaseList'
-import DoubleList from '@/components/DoubleList'
-import PrintTableDialog from '@/components/PrintTableDialog'
-import BasePrintTable from '@/components/BasePrintTable'
-import DetailItem from '@/components/DetailItem'
-import BaseForm from '@/components/BaseForm'
 import 'normalize.css/normalize.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
-import App from './App'
-import router from './router'
-import store from './store'
 import '@/permission'
 
+import App from './App'
+import BarCode from '@/components/BarCode/index'
+import BaseForm from '@/components/BaseForm'
+import BaseList from '@/components/BaseList'
+import BasePrintTable from '@/components/BasePrintTable'
+import BaseTable from '@/components/BaseTable'
+import DetailItem from '@/components/DetailItem'
+import DoubleList from '@/components/DoubleList'
 import { EXTENDS } from './assets/extends'
+import ElementUI from 'element-ui'
+import ItemTitle from '@/components/ItemTitle/index'
+import PrintTableDialog from '@/components/PrintTableDialog'
+import SearchForm from '@/components/SearchForm'
+import Vue from 'vue'
+import { cloneDeep } from 'lodash';
+import locale from 'element-ui/lib/locale/lang/zh-CN'
+import moment from 'moment'
+import router from './router'
+import store from './store'
+
 const { MessageBox } = ElementUI
 Vue.component('BaseTable', BaseTable);
 Vue.component('SearchForm', SearchForm);
@@ -31,6 +32,16 @@ Vue.component('PrintTableDialog', PrintTableDialog);
 Vue.component('BasePrintTable', BasePrintTable);
 Vue.component('DetailItem', DetailItem);
 Vue.component('BaseForm', BaseForm);
+/** 拷贝时分 到另一个时间， 默认 秒和毫秒为0, 不改变目标本身 */
+Vue.prototype.$copyHour = (target, date) => {
+  date = new Date(date)
+  target = new Date(target)
+  let hour = date.getHours()
+  let min = date.getMinutes()
+  target.setHours(hour)
+  target.setMinutes(min)
+  return target
+}
 Vue.prototype.$copy = obj => cloneDeep(obj)
 Vue.prototype.$moment = moment
 Vue.prototype.$apiConfirm = (msg, api) => new Promise((resolve, reject) => {
