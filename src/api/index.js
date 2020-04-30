@@ -32,7 +32,8 @@ export const studentsList = params => http.get(`/api/students`, params)
 
 /** 空闲时间 */
 export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
-
+/** 空闲时间自动创建 */
+export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreasAutoCreate`, params)
 
 /** 时间规则接口 */
 export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)

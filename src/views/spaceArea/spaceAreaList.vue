@@ -8,12 +8,22 @@
       :showControl="true"
       :controlWidth="160"
     >
+      <template slot="btns">
+        <el-button
+          type="primary"
+          size="mini"
+          @click="handleCreate"
+        >
+          自动生成空闲时间
+        </el-button>
+      </template>
     </base-list>
+
   </div>
 </template>
 
 <script>
-import { spaceAreasList } from "@/api";
+import { spaceAreasList, spaceAreasAutoCreate } from "@/api";
 
 const tableConfig = [
   { label: "日期", prop: "date", type: 'time', format: 'YYYY-MM-DD' },
@@ -33,7 +43,8 @@ export default {
       searchConfig,
       listApi: spaceAreasList,
       // 可选 附加查询条件
-      appendSearchParams: {}
+      appendSearchParams: {},
+      createLoading: false,
     };
   },
   methods: {
@@ -53,7 +64,18 @@ export default {
     },
     /** 新建 */
     handleCreate() {
-      this.$router.push({ path: "/qualityTesting/create" });
+      this.createLoading = true
+      spaceAreasAutoCreate().then(res => {
+        this.createLoading = false
+        if (!res) return
+        const { createNum } = res
+        if (createNum === 0) {
+          this.$message.success('已是最新')
+        } else {
+          this.$message.success('创建成功')
+          this.getTableData()
+        }
+      })
     },
     /** 删除 */
     handleDelete(row) {
