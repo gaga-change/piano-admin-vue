@@ -284,8 +284,8 @@ export default {
             this.coursesAddLoading = false
             if (!res) return
             this.$message.success('创建成功！')
+            this.baseChange()
           })
-          this.baseChange()
         }
       })
     },
