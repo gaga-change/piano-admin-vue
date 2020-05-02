@@ -42,6 +42,7 @@ Vue.prototype.$copyHour = (target, date) => {
   target.setMinutes(min)
   return target
 }
+Vue.prototype.$doubleNum = num => num < 10 ? `0${num}` : num
 Vue.prototype.$copy = obj => cloneDeep(obj)
 Vue.prototype.$moment = moment
 Vue.prototype.$apiConfirm = (msg, api) => new Promise((resolve, reject) => {

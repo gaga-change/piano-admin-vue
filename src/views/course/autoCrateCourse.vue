@@ -8,7 +8,10 @@
       ref="form"
     >
       <el-form-item label="排课对象">
-        <el-radio-group v-model="chooseTeacherOrStudent">
+        <el-radio-group
+          v-model="chooseTeacherOrStudent"
+          @change="handleChooseTeacherOrStudentChange"
+        >
           <el-radio :label="1">老师排课</el-radio>
           <el-radio :label="2">学生排课</el-radio>
         </el-radio-group>
@@ -67,7 +70,10 @@
           </el-form-item>
         </template>
       </template>
-      <el-form-item label="选择日期">
+      <el-form-item
+        label="选择日期"
+        prop="date"
+      >
         <!-- <el-calendar :range="['2019-03-04', '2019-03-24']"> -->
         <el-date-picker
           @change="baseChange"
@@ -83,6 +89,7 @@
         label="时间区间"
         prop="spaceArea"
         v-loading="spaceAreasListLoading"
+        v-if="spaceAreas"
       >
         <el-radio-group
           v-model="formData.spaceArea"
@@ -94,6 +101,75 @@
             :label="item._id"
           >{{`${item.startTimeString}-${item.endTimeString}`}}</el-radio>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        label="选择时段"
+        v-loading="matchSpaceAreasLoading"
+        v-if="matchSpaceAreas"
+        prop="checkArea"
+      >
+        <el-radio-group
+          v-model="formData.checkArea"
+          @change="handleCheckAreaChange"
+        >
+          <el-radio
+            :label="item._id"
+            v-for="item in matchSpaceAreas"
+            :key="item._id"
+          >{{item.areaString[0]}} - {{item.areaString[1]}}（{{item.minute}}分钟），{{item.teacher ? `教师：${item.teacher.name}` : `学生：${item.student.name}`}}</el-radio>
+        </el-radio-group>
+        <span v-if="matchSpaceAreas.length === 0">没有可以匹配的人</span>
+      </el-form-item>
+      <el-form-item
+        label="课类别"
+        prop="classType"
+      >
+        <el-radio-group v-model="formData.classType">
+          <el-radio
+            :label="item.value"
+            v-for="item in (mapConfig.classType || [])"
+            :key="item._id"
+          >
+            {{item.name}}
+          </el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        label="课时长"
+        v-if="classTimeEnum"
+        prop="classTime"
+      >
+        <el-radio-group
+          v-model="formData.classTime"
+          @change="handleClassTimeChange"
+        >
+          <el-radio
+            :label="item.value"
+            v-for="item in classTimeEnum"
+            :key="item._id"
+          >
+            {{item.name}}
+          </el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        label="课程开始时间"
+        v-if="startTimeRange"
+        prop="sourceStartTime"
+      >
+        <el-time-picker
+          v-model="formData.sourceStartTime"
+          format="HH:mm"
+          :picker-options="{selectableRange: startTimeRange}"
+          placeholder="时间点"
+        >
+        </el-time-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          @click="submit"
+          type="primary"
+        >提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -141,16 +217,49 @@ export default {
       },
       chooseTeacherOrStudent: 1,
       spaceAreasListLoading: false,
-      spaceAreas: [],
+      matchSpaceAreasLoading: false,
+      coursesAddLoading: false,
+      spaceAreas: null, // 目标对象空闲时间（单人）
+      matchSpaceAreas: null, // 匹配对象空闲时间（多人）
+      matchSpaceArea: null, // 匹配的空闲时间对象
       formData: {
         teacher: undefined,
         student: undefined,
         date: undefined,
         spaceArea: undefined,
+        checkArea: undefined,
+        sourceStartTime: undefined,
+        classType: 0, // 课类别
+        classTime: undefined, // 课时长
+        sourceStartTime: undefined, // 课开始时间
       },
       rules: {
-
+        teacher: [{ required: true, message: '必填项', trigger: 'blur' }],
+        student: [{ required: true, message: '必填项', trigger: 'blur' }],
+        date: [{ required: true, message: '必填项', trigger: 'blur' }],
+        spaceArea: [{ required: true, message: '必填项', trigger: 'blur' }],
+        checkArea: [{ required: true, message: '必填项', trigger: 'blur' }],
+        classType: [{ required: true, message: '必填项', trigger: 'blur' }],
+        classTime: [{ required: true, message: '必填项', trigger: 'blur' }],
+        sourceStartTime: [{ required: true, message: '必填项', trigger: 'blur' }],
       }
+    }
+  },
+  computed: {
+    mapConfig() {
+      return this.$store.state.map.mapConfig
+    },
+    classTimeEnum() {
+      let minute = this.matchSpaceArea && this.matchSpaceArea.minute
+      if (!minute) return null
+      return (this.mapConfig.classTime || []).filter(v => {
+        return v.value <= (minute || 0)
+      })
+    },
+    startTimeRange() {
+      if (!this.formData.classTime) return ''
+      if (!this.matchSpaceArea) return ''
+      return `${this.$moment(this.matchSpaceArea.area[0]).format('HH:mm:ss')} - ${this.$moment(this.matchSpaceArea.area[1].getTime() - this.formData.classTime * 60 * 1000).format('HH:mm:ss')}`
     }
   },
   created() {
@@ -158,8 +267,35 @@ export default {
     this.teacherConfig.remoteMethod()
   },
   methods: {
-    baseChange(v) {
-      console.log(this.$copy(this.formData))
+    submit() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          const params = this.$copy(this.formData)
+          if (this.chooseTeacherOrStudent === 1) {
+            params.student = this.matchSpaceArea.student._id
+          } else {
+            params.teacher = this.matchSpaceArea.teacher._id
+          }
+          params.startTime = params.sourceStartTime
+          params.endTime = new Date(params.sourceStartTime.getTime() + params.classTime * 60 * 1000)
+          params.status = 0
+          this.coursesAddLoading = true
+          coursesAdd(params).then(res => {
+            this.coursesAddLoading = false
+            if (!res) return
+            this.$message.success('创建成功！')
+          })
+          this.baseChange()
+        }
+      })
+    },
+    /** 排课对象类型修改 */
+    handleChooseTeacherOrStudentChange(v) {
+      // 重置另个对象
+      this.baseChange()
+    },
+    /** 排课对象&日期修改  */
+    baseChange() {
       let bool = false
       let params = {}
       if (this.chooseTeacherOrStudent === 1) { // 老师
@@ -170,7 +306,6 @@ export default {
         params.student = this.formData.student
       }
       if (bool && this.formData.date) {
-        console.log('获取空闲时间')
         let date = new Date(this.formData.date)
         date.setHours(0, 0, 0, 0)
         this.spaceAreasListLoading = true
@@ -183,13 +318,22 @@ export default {
             v.endTimeString = this.$moment(v.endTime).format("HH:mm")
             return v
           })
+          this.handelSpaceAreaChange()
         })
       } else {
-        this.spaceAreas = []
+        this.spaceAreas = null
+        this.handelSpaceAreaChange()
       }
     },
+    /** 当事人 空闲区间选择 */
     handelSpaceAreaChange(id) {
-      let params = {}
+      if (!id) {
+        this.formData.spaceArea = undefined
+        this.matchSpaceAreas = null
+        this.handleCheckAreaChange()
+        return
+      }
+      let params = { pageSize: 999 }
       if (this.chooseTeacherOrStudent === 1) {
         params.hasStudent = true
       } else {
@@ -198,12 +342,52 @@ export default {
       let item = this.spaceAreas.find(v => v._id === id)
       params.startTime = item.startTime
       params.endTime = item.endTime
-      console.log(params)
+      this.matchSpaceAreasLoading = true
       spaceAreasList(params).then(res => {
+        this.matchSpaceAreasLoading = false
         if (!res) return
-        console.log(res)
+        this.matchSpaceAreas = res.list.map(v => {
+          // 获取交叉时间段 以及 时长
+          let area01 = [new Date(item.startTime).getTime(), new Date(item.endTime).getTime()]
+          let area02 = [new Date(v.startTime).getTime(), new Date(v.endTime).getTime()]
+          let area = [new Date(Math.max(area01[0], area02[0])), new Date(Math.min(area01[1], area02[1]))]
+          v.area = area
+          v.areaString = [this.$moment(area[0]).format('HH:mm'), this.$moment(area[1]).format('HH:mm')]
+          v.minute = (area[1].getTime() - area[0].getTime()) / 1000 / 60//单位分钟 
+          return v
+        })
       })
-    }
+      this.handleCheckAreaChange()
+    },
+    /** 选择匹配的人 以及时间范围 */
+    handleCheckAreaChange(id) {
+      if (!id) {
+        this.formData.checkArea = undefined
+        this.matchSpaceArea = null
+      } else {
+        const temp = this.matchSpaceAreas.find(v => v._id === id)
+        this.matchSpaceArea = temp
+      }
+      this.handleClassTimeChange()
+    },
+    /** 课时长修改 */
+    handleClassTimeChange(id) {
+      if (!id) {
+        this.formData.sourceStartTime = undefined
+        this.formData.classTime = undefined
+        return
+      }
+      this.formData.sourceStartTime = this.matchSpaceArea.area[0]
+    },
+    /** 格式化显示课程时间 */
+    formatTooltip(val) {
+      let h = Math.floor(val / 60)
+      let m = val % 60
+      if (val === 24 * 60) {
+        return '00:00'
+      }
+      return `${this.$doubleNum(h)}:${this.$doubleNum(m)}`;
+    },
   }
 }
 </script>

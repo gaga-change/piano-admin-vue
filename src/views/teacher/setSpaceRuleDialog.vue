@@ -125,7 +125,6 @@ export default {
       // 校验相邻是否冲突
       //"spaceRules.0.areas.1.value"
       let errMsg = '时间范围存在冲突'
-      console.log('check ### ', value, rule)
       if (!value || value.length !== 2) {
         return callback()
       }
@@ -141,8 +140,6 @@ export default {
           return false
         }
         _v = [turnDate(_v[0]), turnDate(_v[1])]
-        // console.log(value, _v)
-        console.log(_v[1] === value[0], _v[0] === value[1], _v, value)
         if ((_v[1] === value[0])
           || (_v[0] === value[1])) {
           errMsg = "有相连的时间范围，需合并成一个"
@@ -157,7 +154,6 @@ export default {
           return true
         }
       })
-      console.log('chekc', check)
       if (check) {
         callback(errMsg)
       } else
@@ -242,7 +238,6 @@ export default {
           return [_trunDate(temp[0]), _trunDate(temp[1])]
         })
       })
-      // console.log(areas)
       areas.forEach((item, i) => {
         item.forEach(v => {
           this.formData.spaceRules[i].areas.push({
@@ -259,7 +254,6 @@ export default {
       spaceRulesList(params).then(res => {
         this.initLoading = false
         if (!res) return
-        console.log(res.list)
         this.oldAreas = []
         this.keySpaceRule = {}
         res.list.forEach(item => {

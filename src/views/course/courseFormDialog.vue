@@ -133,7 +133,6 @@ export default {
           }
         }
       });
-      console.log(this.$copy(this.formConfig))
       this.$nextTick(() => {
         this.$refs["form"].init();
       });
