@@ -37,6 +37,7 @@ const searchConfig = [
   { label: "日期", prop: "date", type: 'date', dateType: 'date' },
 ];
 export default {
+  name: "spaceAreaList",
   data() {
     return {
       selectedRow: null,

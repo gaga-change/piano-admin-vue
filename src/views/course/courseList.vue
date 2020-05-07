@@ -6,6 +6,7 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
+      :parseData="parseData"
       :controlWidth="160"
     >
       <template slot-scope="scope">
@@ -47,7 +48,7 @@
 import { coursesList, coursesDel } from "@/api";
 import courseFormDialog from "./courseFormDialog";
 const tableConfig = [
-  { label: "日期", prop: "date", type: 'time', format: 'YYYY-MM-DD' },
+  { label: "日期", prop: "startTime", type: 'time', format: 'YYYY-MM-DD', width: 100 },
   { label: "开始时间", prop: "startTime", type: 'time', format: 'HH:mm' },
   { label: "结束时间", prop: "endTime", type: 'time', format: 'HH:mm' },
   { label: "教师", prop: "teacher.name" },
@@ -69,6 +70,7 @@ const searchConfig = [
   { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
 ];
 export default {
+  name: 'courseList',
   components: { courseFormDialog },
   data() {
     return {
@@ -88,11 +90,11 @@ export default {
     },
     /** 可选 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || [];
-      let total = res.data.total;
+      let data = res.list || [];
+      let total = res.total;
       data.forEach(v => {
-        v.updateLockStatusOutLoading = false;
-        v.updateLockStatusInLoading = false;
+        v.date = new Date(v.startTime)
+        v.date.setHours(0, 0, 0, 0)
       });
       return { data, total };
     },

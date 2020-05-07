@@ -5,15 +5,15 @@ const tagsView = {
   },
   mutations: {
     ADD_VISITED_VIEWS: (state, view) => {
-      if (state.visitedViews.some(v => v.path === view.path)){
-        state.visitedViews.find(v => v.path === view.path).query=view.query 
+      if (state.visitedViews.some(v => v.path === view.path)) {
+        state.visitedViews.find(v => v.path === view.path).query = view.query
         return
       }
       state.visitedViews.push({
         name: view.name,
         path: view.path,
         title: view.meta.title || 'no-name',
-        query:view.query
+        query: view.query
       })
       if (!view.meta.noCache) {
         state.cachedViews.push(view.name)

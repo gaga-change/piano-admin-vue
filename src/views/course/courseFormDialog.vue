@@ -45,7 +45,6 @@ const formConfig = [
   {
     label: "日期", prop: "date", type: 'datePicker', pickerOptions: {
       disabledDate(time) {
-
         return time.getTime() < (Date.now() - 24 * 60 * 60 * 1000);
       },
     }
@@ -187,9 +186,12 @@ export default {
           startTime = new Date(startTime)
           date = new Date(date)
           date.setHours(0, 0, 0, 0)
+          startTime.setFullYear(date.getFullYear(), date.getMonth(), date.getDate())
           startTime.setSeconds(0, 0)
+          params.startTime = startTime
           params.endTime = new Date(startTime.getTime() + params.classTime * 60 * 1000)
           this.loading = true;
+          delete params.date
           let temp = isModify ? [this.row._id, params] : [params];
           api(...temp).then(res => {
             this.loading = false;
@@ -204,10 +206,12 @@ export default {
     /** 关闭弹窗 */
     close() {
       // 初始化表单
-      this.$refs["form"] && this.$refs["form"].resetFields();
       // 初始化没有挂载到表单的数据
       // ...
       this.visible && this.$emit("update:visible", false);
+      this.$nextTick(() => {
+        this.$refs["form"] && this.$refs["form"].resetFields();
+      })
     },
     handleClose(done) {
       if (this.visible === false) {
