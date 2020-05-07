@@ -5,7 +5,8 @@
       :tableConfig="tableConfig"
       :searchConfig="searchConfig"
       :api="listApi"
-      :showControl="true"
+      :showControl="false"
+      :parseData="parseData"
       :controlWidth="160"
     >
       <template slot="btns">
@@ -26,14 +27,14 @@
 import { spaceAreasList, spaceAreasAutoCreate } from "@/api";
 
 const tableConfig = [
-  { label: "日期", prop: "date", type: 'time', format: 'YYYY-MM-DD' },
+  { label: "日期", prop: "startTime", type: 'time', format: 'YYYY-MM-DD' },
   { label: "开始时间", prop: "startTime", type: 'time', format: 'HH:mm' },
   { label: "结束时间", prop: "endTime", type: 'time', format: 'HH:mm' },
-  { label: "教师", prop: "teacher.name" },
-  { label: "学生", prop: "student.name" },
+  { label: "姓名", prop: "name" },
+  { label: "类别", prop: "personType", type: 'enum', enum: 'personType' },
 ];
 const searchConfig = [
-  { label: "日期", prop: "date", type: 'time', format: 'YYYY-MM-DD' },
+  { label: "日期", prop: "date", type: 'date', dateType: 'date' },
 ];
 export default {
   data() {
@@ -54,11 +55,13 @@ export default {
     },
     /** 可选 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || [];
-      let total = res.data.total;
+      let data = res.list || [];
+      let total = res.total;
       data.forEach(v => {
-        v.updateLockStatusOutLoading = false;
-        v.updateLockStatusInLoading = false;
+        v.isTeacher = !!v.teacher
+        v.person = v.teacher || v.student
+        v.name = v.person.name
+        v.personType = v.teacher ? 0 : 1
       });
       return { data, total };
     },
