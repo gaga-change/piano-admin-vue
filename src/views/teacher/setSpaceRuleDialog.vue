@@ -257,6 +257,10 @@ export default {
         this.oldAreas = []
         this.keySpaceRule = {}
         res.list.forEach(item => {
+          item.week = new Date(item.startTime).getDay()
+          if (item.week === 0) {
+            item.week = 7
+          }
           const key = `${item.week}-${turnDate(item.startTime)}-${turnDate(item.endTime)}`
           this.oldAreas.push({
             txt: key,
@@ -323,10 +327,12 @@ export default {
           console.log('新增的 ', addArr)
           for (let i = 0; i < addArr.length; i++) {
             let item = addArr[i]
+            let startEnd = [new Date(item.value[0]), new Date(item.value[1])]
+            startEnd[0].setFullYear(2019, 6, item.week)
+            startEnd[1].setFullYear(2019, 6, item.week)
             const params = {
-              startTime: item.value[0],
-              endTime: item.value[1],
-              week: item.week,
+              startTime: startEnd[0],
+              endTime: startEnd[1],
             }
             params[this.type] = this.rowData._id
             await spaceRulesAdd(params)
