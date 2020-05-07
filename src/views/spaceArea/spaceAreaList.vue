@@ -61,7 +61,7 @@ export default {
       data.forEach(v => {
         v.isTeacher = !!v.teacher
         v.person = v.teacher || v.student
-        v.name = v.person.name
+        v.name = v.person && v.person.name
         v.personType = v.teacher ? 0 : 1
       });
       return { data, total };

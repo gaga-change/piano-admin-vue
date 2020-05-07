@@ -6,7 +6,7 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
-      :controlWidth="160"
+      :controlWidth="200"
     >
       <template slot-scope="scope">
         <el-link

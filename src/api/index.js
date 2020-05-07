@@ -39,6 +39,7 @@ export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreasAutoCreat
 export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
 export const spaceRulesDel = id => http.delete(`/api/spaceRules/${id}`)
 export const spaceRulesModify = (id, params) => http.put(`/api/spaceRules/${id}`, params)
+export const spaceRulesUpdate = params => http.post(`/api/spaceRulesUpdate`, params)
 export const spaceRulesDetail = id => http.get(`/api/spaceRules/${id}`)
 export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
 

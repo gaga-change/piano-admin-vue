@@ -76,7 +76,13 @@
           type="primary"
           :loading="loading"
           @click="confirm()"
-        >确 定</el-button>
+        >立即生效</el-button>
+        <el-button
+          type="primary"
+          :loading="loading"
+          disabled="disabled"
+          @click="confirm()"
+        >下个周期生效</el-button>
       </span>
     </el-dialog>
   </div>
@@ -88,7 +94,7 @@ const turnDate = date => {
   const d = new Date(date)
   return Number(`${d.getHours()}.${d.getMinutes() > 10 ? d.getMinutes() : ('0' + d.getMinutes())}`)
 }
-import { spaceRulesAdd, spaceRulesDel, spaceRulesList } from '@/api'
+import { spaceRulesAdd, spaceRulesDel, spaceRulesList, spaceRulesUpdate } from '@/api'
 export default {
   props: {
     visible: {
@@ -290,7 +296,10 @@ export default {
     confirm() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          this.loading = true
+          const params = {
+            del: [],
+            add: []
+          }
           let newAreas = [] // {txt: '${week}-20.01-21:12', value: [date1, date2], week: 1}
           let oldAreas = [...this.oldAreas] // {txt: '${week}-20.01-21:12', value: [date1, date2]}
           let keySpaceRule = { ...this.keySpaceRule } // '{${week}-20.01-21:12: obj}' 
@@ -315,7 +324,8 @@ export default {
           console.log('被删除的 ', delArr)
           for (let i = 0; i < delArr.length; i++) {
             let item = delArr[i]
-            await spaceRulesDel(item._id)
+            params.del.push(item._id)
+            // await spaceRulesDel(item._id)
           }
           // 获取新增的列表  当前的时间段在初始中没有
           let addArr = []
@@ -330,15 +340,20 @@ export default {
             let startEnd = [new Date(item.value[0]), new Date(item.value[1])]
             startEnd[0].setFullYear(2019, 6, item.week)
             startEnd[1].setFullYear(2019, 6, item.week)
-            const params = {
+            const area = {
               startTime: startEnd[0],
               endTime: startEnd[1],
             }
-            params[this.type] = this.rowData._id
-            await spaceRulesAdd(params)
+            area[this.type] = this.rowData._id
+            params.add.push(area)
+            // await spaceRulesAdd(params)
           }
-          this.loading = false
-          this.close()
+          this.loading = true
+          spaceRulesUpdate(params).then(res => {
+            this.loading = false
+            if (!res) return
+            this.close()
+          })
         }
       })
     },
