@@ -34,6 +34,8 @@ export const studentsList = params => http.get(`/api/students`, params)
 export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
 /** 空闲时间自动创建 */
 export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreasAutoCreate`, params)
+/** 空闲时间自动清理 */
+export const spaceAreasClearNoTeacherOrStudent = params => http.post(`/api/spaceAreasClearNoTeacherOrStudent`, params)
 
 /** 时间规则接口 */
 export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
@@ -42,6 +44,8 @@ export const spaceRulesModify = (id, params) => http.put(`/api/spaceRules/${id}`
 export const spaceRulesUpdate = params => http.post(`/api/spaceRulesUpdate`, params)
 export const spaceRulesDetail = id => http.get(`/api/spaceRules/${id}`)
 export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
+/** 时间规则自动清理 */
+export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRulesClearNoTeacherOrStudent`, params)
 
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)

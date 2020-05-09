@@ -13,18 +13,34 @@
         <el-button
           type="primary"
           size="mini"
+          :loading="createLoading"
           @click="handleCreate"
         >
           自动生成空闲时间
         </el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          :loading="autoDelSpaceRuleLoading"
+          @click="autoDelSpaceRule"
+        >
+          自动清理时间规则
+        </el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          :loading="autoDelSpaceAreaLoading"
+          @click="autoDelSpaceArea"
+        >
+          自动清理空闲时间
+        </el-button>
       </template>
     </base-list>
-
   </div>
 </template>
 
 <script>
-import { spaceAreasList, spaceAreasAutoCreate } from "@/api";
+import { spaceAreasList, spaceAreasAutoCreate, spaceAreasClearNoTeacherOrStudent, spaceRulesClearNoTeacherOrStudent } from "@/api";
 
 const tableConfig = [
   { label: "日期", prop: "startTime", type: 'time', format: 'YYYY-MM-DD' },
@@ -41,6 +57,8 @@ export default {
   data() {
     return {
       selectedRow: null,
+      autoDelSpaceAreaLoading: false,
+      autoDelSpaceRuleLoading: false,
       tableConfig,
       searchConfig,
       listApi: spaceAreasList,
@@ -77,6 +95,27 @@ export default {
           this.$message.success('已是最新')
         } else {
           this.$message.success('创建成功')
+          this.getTableData()
+        }
+      })
+    },
+    autoDelSpaceRule() {
+      this.autoDelSpaceRuleLoading = true
+      spaceRulesClearNoTeacherOrStudent().then(res => {
+        this.autoDelSpaceRuleLoading = false
+        if (!res) return
+        const { idNum, docNum } = res
+        this.$message.success(`清理无用主档数量${idNum}，删除文档数量${docNum}`)
+      })
+    },
+    autoDelSpaceArea() {
+      this.autoDelSpaceAreaLoading = true
+      spaceAreasClearNoTeacherOrStudent().then(res => {
+        this.autoDelSpaceAreaLoading = false
+        if (!res) return
+        const { idNum, docNum } = res
+        this.$message.success(`清理无用主档数量${idNum}，删除文档数量${docNum}`)
+        if (docNum > 0) {
           this.getTableData()
         }
       })
