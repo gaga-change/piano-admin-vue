@@ -6,7 +6,7 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
-      :controlWidth="200"
+      :controlWidth="240"
     >
       <template slot-scope="scope">
         <el-link
@@ -24,6 +24,14 @@
             setSpaceRuleDialogVisible = true;
           "
         >空闲时段</el-link>
+        <el-divider direction="vertical"></el-divider>
+        <el-link
+          type="primary"
+          @click="
+            selectedRow = scope.row;
+            tableTimeDialogVisible = true;
+          "
+        >课表</el-link>
         <el-divider direction="vertical"></el-divider>
         <el-link
           type="primary"
@@ -55,6 +63,13 @@
         @submited="getTableData()"
       />
     </template>
+    <template v-if="tableTimeDialogVisible">
+      <TableTimeDialog
+        :visible.sync="tableTimeDialogVisible"
+        :row="selectedRow"
+        type="teacher"
+      ></TableTimeDialog>
+    </template>
   </div>
 </template>
 
@@ -62,6 +77,7 @@
 import { teachersList, teachersDel } from "@/api";
 import teacherFormDialog from "./teacherFormDialog";
 import setSpaceRuleDialog from "./setSpaceRuleDialog"
+import TableTimeDialog from "@/components/TableTimeDialog"
 const tableConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
@@ -81,11 +97,12 @@ const searchConfig = [
   { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" }
 ];
 export default {
-  components: { teacherFormDialog, setSpaceRuleDialog },
+  components: { teacherFormDialog, setSpaceRuleDialog, TableTimeDialog },
   data() {
     return {
       teacherFormDialogVisible: false,
       setSpaceRuleDialogVisible: false,
+      tableTimeDialogVisible: false,
       selectedRow: null,
       tableConfig,
       searchConfig,

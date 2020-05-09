@@ -39,11 +39,24 @@
                   <span class="grid-body">
                   </span>
                 </span>
+                <template v-if="spaceRulePosition[weekIndex]">
+                  <span
+                    class="space-rule"
+                    v-for="(item) in spaceRulePosition[weekIndex]"
+                    :key="item._id"
+                    :style="{
+                          top: item.top,
+                          height: item.height
+                        }"
+                  >
+                    <div class="item"></div>
+                  </span>
+                </template>
                 <template v-if="coursePosition[weekIndex]">
                   <span
                     class="course-item"
-                    v-for="(item, i) in coursePosition[weekIndex]"
-                    :key="i"
+                    v-for="(item) in coursePosition[weekIndex]"
+                    :key="item._id"
                     :style="{
                           top: item.top,
                           height: item.height
@@ -78,7 +91,7 @@
  */
 const WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
-import { coursesActivateArea, spaceAreaActivateArea } from '@/api'
+import { coursesActivateArea, spaceAreaActivateArea, spaceRulesList } from '@/api'
 export default {
   props: {
     type: {
@@ -104,24 +117,25 @@ export default {
       loading: false,
       tableTitle: [],
       tableTime: [],
-      coursePosition: []
+      coursePosition: [],
+      spaceRulePosition: []
     }
   },
   created() {
-    // const id = this.row && this.row._id
-    const id = '5e96a9aae571d02cf8713de3'
+    const id = this.row && this.row._id
     const params = {}
     params[this.type] = id
     this.loading = true
     Promise.all([
       coursesActivateArea(params),
-      spaceAreaActivateArea(params),
+      spaceRulesList({ ...params, pageSize: 999 }),
     ]).then(res => {
-      const [courses, spaceAreas] = res
+      const [courses, sapceRules] = res
       this.loading = false
-      if (!courses || !spaceAreas) return
+      if (!courses || !sapceRules) return
       this.drawCourse(courses)
-      console.log(courses, spaceAreas)
+      this.drawSpaceRules(sapceRules.list)
+      console.log(courses, sapceRules)
     })
     this.initDraw()
   },
@@ -147,8 +161,14 @@ export default {
     drawCourse(courses) {
       // 获取课表周
       // 计算开始的高度 和 结束的高度
+      this.coursePosition = this.computedGrid(courses)
+    },
+    drawSpaceRules(spaceRules) {
+      this.spaceRulePosition = this.computedGrid(spaceRules)
+    },
+    computedGrid(list) {
       let res = []
-      courses.forEach(course => {
+      list.forEach(course => {
         let obj = {}
         const startTime = new Date(course.startTime)
         const endTime = new Date(course.endTime)
@@ -162,8 +182,8 @@ export default {
         /** 传入分钟数，计算出对应的高度 */
         const _ = minute => {
           minute = minute - 7 * 60
-          const GRID_HEIGHT = 30
-          const MARGIN_BOTTOM = 10
+          const GRID_HEIGHT = 20
+          const MARGIN_BOTTOM = 3
           // 前面块数量 * 块高度+margin   +   占用当前块的高度
           let num = Math.floor(minute / 30)
           let height = (minute - num * 30) / 30 * GRID_HEIGHT
@@ -178,11 +198,13 @@ export default {
         res[weekIndex].push({
           top: top + 'px',
           height: height - top + 'px',
-          name: this.isTeacher ? course.teacher.name : course.student.name
+          name: course.teacher && course.student && (!this.isTeacher ? course.teacher.name : course.student.name),
+          id: course._id
         })
-        this.coursePosition = res
-        console.log(res)
+
       })
+      console.log(res)
+      return res
     },
     /** 关闭弹窗 */
     close() {
@@ -226,12 +248,12 @@ export default {
         flex-wrap: wrap;
         span {
           width: 100%;
-          height: 30px;
+          height: 20px;
           text-align: right;
           padding-right: 10px;
           padding-top: 2px;
           // background-color: aquamarine;
-          margin-bottom: 10px;
+          margin-bottom: 3px;
         }
       }
       .course-grad {
@@ -247,12 +269,13 @@ export default {
             position: relative;
             display: block;
             width: 100%;
-            height: 30px;
+            height: 20px;
 
-            margin-bottom: 10px;
+            margin-bottom: 3px;
             padding: 0 5px;
           }
-          .course-item {
+          .course-item,
+          .space-rule {
             position: absolute;
             display: block;
             left: 0;
@@ -263,11 +286,22 @@ export default {
               display: flex;
               align-items: center;
               justify-content: center;
-              background-color: #f56c6c;
-              opacity: 0.8;
+
               height: 100%;
               border-radius: 5px;
+            }
+          }
+          .course-item {
+            .item {
+              opacity: 0.8;
+              background-color: #f56c6c;
               color: #eee;
+            }
+          }
+          .space-rule {
+            .item {
+              opacity: 0.5;
+              background-color: aliceblue;
             }
           }
           .grid-body {

@@ -64,11 +64,13 @@
         @submited="getTableData()"
       />
     </template>
-    <TableTimeDialog
-      :visible.sync="tableTimeDialogVisible"
-      :row="selectedRow"
-      type="student"
-    ></TableTimeDialog>
+    <template v-if="tableTimeDialogVisible">
+      <TableTimeDialog
+        :visible.sync="tableTimeDialogVisible"
+        :row="selectedRow"
+        type="student"
+      ></TableTimeDialog>
+    </template>
   </div>
 </template>
 
@@ -97,7 +99,7 @@ export default {
     return {
       studentFormDialogVisible: false,
       setSpaceRuleDialogVisible: false,
-      tableTimeDialogVisible: true,
+      tableTimeDialogVisible: false,
       selectedRow: null,
       tableConfig,
       searchConfig,
