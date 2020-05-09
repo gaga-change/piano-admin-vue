@@ -16,12 +16,14 @@ export const teachersModify = (id, params) => http.put(`/api/teachers/${id}`, pa
 export const teachersDetail = id => http.get(`/api/teachers/${id}`)
 export const teachersList = params => http.get(`/api/teachers`, params)
 
-/** 老师接口 */
+/** 课程接口 */
 export const coursesAdd = params => http.post(`/api/courses`, params)
 export const coursesDel = id => http.delete(`/api/courses/${id}`)
 export const coursesModify = (id, params) => http.put(`/api/courses/${id}`, params)
 export const coursesDetail = id => http.get(`/api/courses/${id}`)
 export const coursesList = params => http.get(`/api/courses`, params)
+/** 获取周期内的课程 */
+export const coursesActivateArea = params => http.get(`/api/coursesActivateArea`, params)
 
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
@@ -36,6 +38,8 @@ export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
 export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreasAutoCreate`, params)
 /** 空闲时间自动清理 */
 export const spaceAreasClearNoTeacherOrStudent = params => http.post(`/api/spaceAreasClearNoTeacherOrStudent`, params)
+/** 获取周期内的空闲时间 */
+export const spaceAreaActivateArea = params => http.get(`/api/spaceAreaActivateArea`, params)
 
 /** 时间规则接口 */
 export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
