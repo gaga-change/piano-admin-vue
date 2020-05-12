@@ -95,8 +95,8 @@ export default {
           this.$message.success('已是最新')
         } else {
           this.$message.success('创建成功')
-          this.getTableData()
         }
+        this.getTableData() // 可能存在清除操作，执行完毕自动刷新列表
       })
     },
     autoDelSpaceRule() {
