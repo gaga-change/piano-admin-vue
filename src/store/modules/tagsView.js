@@ -7,6 +7,7 @@ const tagsView = {
     ADD_VISITED_VIEWS: (state, view) => {
       if (state.visitedViews.some(v => v.path === view.path)) {
         state.visitedViews.find(v => v.path === view.path).query = view.query
+        state.isNew = false
         return
       }
       state.visitedViews.push({
@@ -16,6 +17,7 @@ const tagsView = {
         query: view.query
       })
       if (!view.meta.noCache) {
+        state.isNew = true
         state.cachedViews.push(view.name)
       }
     },

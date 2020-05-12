@@ -110,6 +110,11 @@ export default {
         this.getTableData()
       })
     }
-  }
+  },
+  activated() {
+    if (!this.$store.state.tagsView.isNew) {
+      this.getTableData()
+    }
+  },
 };
 </script>

@@ -179,6 +179,7 @@
 import { coursesAdd, teachersList, studentsList, spaceAreasList } from "@/api";
 
 export default {
+  name: "autoCrateCourse",
   data() {
     const teacherConfig = {}
     const studentConfig = {}

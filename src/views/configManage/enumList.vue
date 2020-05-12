@@ -66,6 +66,7 @@ const searchConfig = [
 ]
 
 export default {
+  name: 'enumList',
   components: { createDialog: enumCreateFormDialog },
   data() {
     return {
@@ -119,6 +120,11 @@ export default {
     handleOutput() {
       window.open('/api/enumsTotal')
     }
-  }
+  },
+  activated() {
+    if (!this.$store.state.tagsView.isNew) {
+      this.getTableData()
+    }
+  },
 }
 </script>

@@ -97,6 +97,7 @@ const searchConfig = [
   { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" }
 ];
 export default {
+  name: 'teacherList',
   components: { teacherFormDialog, setSpaceRuleDialog, TableTimeDialog },
   data() {
     return {
@@ -138,6 +139,11 @@ export default {
         this.getTableData()
       })
     }
-  }
+  },
+  activated() {
+    if (!this.$store.state.tagsView.isNew) {
+      this.getTableData()
+    }
+  },
 };
 </script>

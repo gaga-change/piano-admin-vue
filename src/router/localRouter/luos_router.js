@@ -7,13 +7,13 @@ export default [
     path: '/teacher',
     component: Layout,
     redirect: 'teacherList',
-    meta: { title: '教师管理', noCache: true, icon: 'deliver' },
+    meta: { title: '教师管理', icon: 'deliver' },
     hidden: false,
     children: [
       {
         name: 'teacherList',
         path: 'teacherList',
-        meta: { title: '教师列表', noCache: true },
+        meta: { title: '教师列表', noCache: false },
         component: _import('teacher/teacherList'),
         hidden: false,
       },
@@ -23,13 +23,13 @@ export default [
     path: '/student',
     component: Layout,
     redirect: 'studentList',
-    meta: { title: '学生管理', noCache: true, icon: 'deliver' },
+    meta: { title: '学生管理', icon: 'deliver' },
     hidden: false,
     children: [
       {
         name: 'studentList',
         path: 'studentList',
-        meta: { title: '学生列表', noCache: true },
+        meta: { title: '学生列表', noCache: false },
         component: _import('student/studentList'),
         hidden: false,
       },
@@ -39,7 +39,7 @@ export default [
     path: '/course',
     component: Layout,
     redirect: 'courseList',
-    meta: { title: '课程管理', noCache: false },
+    meta: { title: '课程管理' },
     hidden: false,
     children: [
       {
@@ -69,13 +69,13 @@ export default [
     path: '/configManage',
     component: Layout,
     redirect: 'enumList',
-    meta: { title: '系统配置中心', noCache: true },
+    meta: { title: '系统配置中心' },
     hidden: false,
     children: [
       {
         name: 'enumList',
         path: 'enumList',
-        meta: { title: '枚举配置', noCache: true },
+        meta: { title: '枚举配置', noCache: false },
         component: _import('configManage/enumList'),
         hidden: false,
       },
