@@ -94,7 +94,7 @@ const turnDate = date => {
   const d = new Date(date)
   return Number(`${d.getHours()}.${d.getMinutes() > 10 ? d.getMinutes() : ('0' + d.getMinutes())}`)
 }
-import { spaceRulesAdd, spaceRulesDel, spaceRulesList, spaceRulesUpdate } from '@/api'
+import { spaceRulesList, spaceRulesUpdate } from '@/api'
 export default {
   props: {
     visible: {
@@ -325,7 +325,6 @@ export default {
           for (let i = 0; i < delArr.length; i++) {
             let item = delArr[i]
             params.del.push(item._id)
-            // await spaceRulesDel(item._id)
           }
           // 获取新增的列表  当前的时间段在初始中没有
           let addArr = []
@@ -346,7 +345,6 @@ export default {
             }
             area[this.type] = this.rowData._id
             params.add.push(area)
-            // await spaceRulesAdd(params)
           }
           this.loading = true
           spaceRulesUpdate(params).then(res => {

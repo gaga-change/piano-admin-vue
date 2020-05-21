@@ -7,7 +7,7 @@ export const enumsModify = (id, params) => http.put(`/api/enums/${id}`, params)
 export const enumsDetail = id => http.get(`/api/enums/${id}`)
 export const enumsList = params => http.get(`/api/enums`, params)
 /** 获取所有枚举（简化字段） */
-export const enumsTotal = params => http.get('/api/enumsTotal', params)
+export const enumsTotal = params => http.get('/api/enums/enumsTotal', params)
 
 /** 老师接口 */
 export const teachersAdd = params => http.post(`/api/teachers`, params)
@@ -23,7 +23,7 @@ export const coursesModify = (id, params) => http.put(`/api/courses/${id}`, para
 export const coursesDetail = id => http.get(`/api/courses/${id}`)
 export const coursesList = params => http.get(`/api/courses`, params)
 /** 获取周期内的课程 */
-export const coursesActivateArea = params => http.get(`/api/coursesActivateArea`, params)
+export const coursesActivateArea = params => http.get(`/api/courses/coursesActivateArea`, params)
 
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
@@ -35,21 +35,17 @@ export const studentsList = params => http.get(`/api/students`, params)
 /** 空闲时间 */
 export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
 /** 空闲时间自动创建 */
-export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreasAutoCreate`, params)
+export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreas/spaceAreasAutoCreate`, params)
 /** 空闲时间自动清理 */
-export const spaceAreasClearNoTeacherOrStudent = params => http.post(`/api/spaceAreasClearNoTeacherOrStudent`, params)
+export const spaceAreasClearNoTeacherOrStudent = params => http.post(`/api/spaceAreas/spaceAreasClearNoTeacherOrStudent`, params)
 /** 获取周期内的空闲时间 */
-export const spaceAreaActivateArea = params => http.get(`/api/spaceAreaActivateArea`, params)
+export const spaceAreaActivateArea = params => http.get(`/api/spaceAreas/spaceAreaActivateArea`, params)
 
 /** 时间规则接口 */
-export const spaceRulesAdd = params => http.post(`/api/spaceRules`, params)
-export const spaceRulesDel = id => http.delete(`/api/spaceRules/${id}`)
-export const spaceRulesModify = (id, params) => http.put(`/api/spaceRules/${id}`, params)
-export const spaceRulesUpdate = params => http.post(`/api/spaceRulesUpdate`, params)
-export const spaceRulesDetail = id => http.get(`/api/spaceRules/${id}`)
+export const spaceRulesUpdate = params => http.post(`/api/spaceRules/spaceRulesUpdate`, params)
 export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
 /** 时间规则自动清理 */
-export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRulesClearNoTeacherOrStudent`, params)
+export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRules/spaceRulesClearNoTeacherOrStudent`, params)
 
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)
