@@ -47,7 +47,7 @@ const formConfig = [
   { label: "专业", prop: "major" },
   { label: "等级", prop: "grade", type: "enum", enum: "teacherGrade" },
   { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
   { label: "openid", prop: "openid" },
   { label: "备注", prop: "remark" }
 ];

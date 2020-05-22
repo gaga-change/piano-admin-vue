@@ -85,7 +85,7 @@ const tableConfig = [
   { label: "专业", prop: "major" },
   { label: "等级", prop: "grade", type: "enum", enum: "teacherGrade" },
   { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
   { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
   { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
   { label: "备注", prop: "remark" }
@@ -94,7 +94,7 @@ const searchConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
   { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "teacherStatus" }
+  { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" }
 ];
 export default {
   name: 'teacherList',

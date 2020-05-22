@@ -43,7 +43,7 @@
 const formConfig = [
   { label: "姓名", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
-  { label: "状态", prop: "status", type: "enum", enum: "studentStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
   { label: "openid", prop: "openid" },
   { label: "备注", prop: "remark" }
 ];

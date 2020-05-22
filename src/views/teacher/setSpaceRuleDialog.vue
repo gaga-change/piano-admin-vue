@@ -77,12 +77,6 @@
           :loading="loading"
           @click="confirm()"
         >立即生效</el-button>
-        <el-button
-          type="primary"
-          :loading="loading"
-          disabled="disabled"
-          @click="confirm()"
-        >下个周期生效</el-button>
       </span>
     </el-dialog>
   </div>
@@ -255,8 +249,7 @@ export default {
     // 初始化，恢复时间区间
     init() {
       this.initLoading = true
-      const params = { pageSize: 100 }
-      params[this.type] = this.rowData._id
+      const params = { pageSize: 100, person: this.rowData._id }
       spaceRulesList(params).then(res => {
         this.initLoading = false
         if (!res) return
@@ -343,9 +336,13 @@ export default {
               startTime: startEnd[0],
               endTime: startEnd[1],
             }
-            area[this.type] = this.rowData._id
             params.add.push(area)
           }
+          if (params.del.length === 0 && params.add.length === 0) {
+            this.$message.warning('时间规则没有变化，请修改规则后再提交')
+            return
+          }
+          params.person = this.rowData._id
           this.loading = true
           spaceRulesUpdate(params).then(res => {
             this.loading = false
