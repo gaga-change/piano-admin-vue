@@ -54,7 +54,7 @@
           </div>
           <el-form-item label="自动识别">
             <el-input
-              v-model="spaceAreaRuleString"
+              v-model="spaceRuleString"
               type="textarea"
               placeholder="将用户发送的空闲时间规则复制到此处，点击识别"
               show-word-limit
@@ -163,7 +163,7 @@ export default {
       WEEK,
       loading: false,
       initLoading: true,
-      spaceAreaRuleString: "",
+      spaceRuleString: "",
       formData: {
         //  ... 表单字段
         spaceRules: [],
@@ -202,7 +202,7 @@ export default {
         return d
       }
       // let temp = '周一 18:00-22:00 周二 18:00-22:00  周三 18:00-22:00  周四  周五 18:05-22:10  周六 07:00-12:00 13:00-17:00 18:00-22:00 周日 07:00-12:00 13:00-17:00 18:00-22:00'
-      let temp = this.spaceAreaRuleString
+      let temp = this.spaceRuleString
       let areas = [
         /周一(.*)周二/.exec(temp),
         /周二(.*)周三/.exec(temp),

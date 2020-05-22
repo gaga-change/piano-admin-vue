@@ -55,14 +55,7 @@ export default [
         meta: { title: '课程列表', noCache: false },
         component: _import('course/courseList'),
         hidden: false,
-      },
-      {
-        name: 'spaceAreaList',
-        path: 'spaceAreaList',
-        meta: { title: '空闲时间列表', noCache: false },
-        component: _import('spaceArea/spaceAreaList'),
-      },
-
+      }
     ]
   },
   {

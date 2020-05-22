@@ -32,15 +32,6 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
-/** 空闲时间 */
-export const spaceAreasList = params => http.get(`/api/spaceAreas`, params)
-/** 空闲时间自动创建 */
-export const spaceAreasAutoCreate = params => http.get(`/api/spaceAreas/spaceAreasAutoCreate`, params)
-/** 空闲时间自动清理 */
-export const spaceAreasClearNoTeacherOrStudent = params => http.post(`/api/spaceAreas/spaceAreasClearNoTeacherOrStudent`, params)
-/** 获取周期内的空闲时间 */
-export const spaceAreaActivateArea = params => http.get(`/api/spaceAreas/spaceAreaActivateArea`, params)
-
 /** 时间规则接口 */
 export const spaceRulesUpdate = params => http.post(`/api/spaceRules/spaceRulesUpdate`, params)
 export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
