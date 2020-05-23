@@ -11,6 +11,9 @@ export default {
 </script>
 <style lang="scss">
 /* element ui 样式重置 start*/
+.el-table > .el-table__fixed-right {
+  height: 100% !important; // fixed显示一半问题修复
+}
 .el-card__header {
   padding: 9px 10px;
 }
