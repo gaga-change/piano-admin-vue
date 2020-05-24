@@ -35,6 +35,8 @@ export const studentsList = params => http.get(`/api/students`, params)
 /** 时间规则接口 */
 export const spaceRulesUpdate = params => http.post(`/api/spaceRules/spaceRulesUpdate`, params)
 export const spaceRulesList = params => http.get(`/api/spaceRules`, params)
+export const getSelfSpaceAreaInSpaceRule = params => http.get(`/api/spaceRules/getSelfSpaceAreaInSpaceRule`, params)
+export const getSpaceArea = params => http.get(`/api/spaceRules/getSpaceArea`, params)
 /** 时间规则自动清理 */
 export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRules/spaceRulesClearNoTeacherOrStudent`, params)
 

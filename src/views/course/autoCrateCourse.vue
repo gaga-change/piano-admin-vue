@@ -116,7 +116,7 @@
             :label="item._id"
             v-for="item in matchSpaceAreas"
             :key="item._id"
-          >{{item.areaString[0]}} - {{item.areaString[1]}}（{{item.minute}}分钟），{{item.teacher ? `教师：${item.teacher.name}` : `学生：${item.student.name}`}}</el-radio>
+          >{{item.areaString[0]}} - {{item.areaString[1]}}（{{item.minute}}分钟），{{item.person.kind === 'teacher' ? `教师：${item.person.name}` : `学生：${item.person.name}`}}</el-radio>
         </el-radio-group>
         <span v-if="matchSpaceAreas.length === 0">没有可以匹配的人</span>
       </el-form-item>
@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { coursesAdd, teachersList, studentsList, spaceAreasList } from "@/api";
+import { coursesAdd, teachersList, studentsList, getSelfSpaceAreaInSpaceRule, getSpaceArea } from "@/api";
 
 export default {
   name: "autoCrateCourse",
@@ -273,9 +273,9 @@ export default {
         if (valid) {
           const params = this.$copy(this.formData)
           if (this.chooseTeacherOrStudent === 1) {
-            params.student = this.matchSpaceArea.student._id
+            params.student = this.matchSpaceArea.person._id
           } else {
-            params.teacher = this.matchSpaceArea.teacher._id
+            params.teacher = this.matchSpaceArea.person._id
           }
           params.startTime = params.sourceStartTime
           params.endTime = new Date(params.sourceStartTime.getTime() + params.classTime * 60 * 1000)
@@ -301,20 +301,21 @@ export default {
       let params = {}
       if (this.chooseTeacherOrStudent === 1) { // 老师
         bool = !!this.formData.teacher
-        params.teacher = this.formData.teacher
+        params.person = this.formData.teacher
       } else { // 学生
         bool = !!this.formData.student
-        params.student = this.formData.student
+        params.person = this.formData.student
       }
       if (bool && this.formData.date) {
         let date = new Date(this.formData.date)
         date.setHours(0, 0, 0, 0)
         this.spaceAreasListLoading = true
         params.date = date
-        spaceAreasList(params).then(res => {
+        getSelfSpaceAreaInSpaceRule(params).then(res => {
           this.spaceAreasListLoading = false
           if (!res) return
-          this.spaceAreas = res.list.map(v => {
+          this.spaceAreas = res.map((v, index) => {
+            v._id = `${index}_${Date.now()}_${Math.random()}`
             v.startTimeString = this.$moment(v.startTime).format("HH:mm")
             v.endTimeString = this.$moment(v.endTime).format("HH:mm")
             return v
@@ -334,25 +335,24 @@ export default {
         this.handleCheckAreaChange()
         return
       }
-      let params = { pageSize: 999 }
-      if (this.chooseTeacherOrStudent === 1) {
-        params.hasStudent = true
-      } else {
-        params.hasTeacher = true
+      let params = {}
+      if (this.chooseTeacherOrStudent === 1) { // 老师
+        params.person = this.formData.teacher
+      } else { // 学生
+        params.person = this.formData.student
       }
       let item = this.spaceAreas.find(v => v._id === id)
       params.startTime = item.startTime
       params.endTime = item.endTime
       this.matchSpaceAreasLoading = true
-      spaceAreasList(params).then(res => {
+      getSpaceArea(params).then(res => {
         this.matchSpaceAreasLoading = false
         if (!res) return
-        this.matchSpaceAreas = res.list.map(v => {
+        this.matchSpaceAreas = res.map((v, index) => {
+          v._id = `${index}_${Date.now()}_${Math.random()}`
           // 获取交叉时间段 以及 时长
-          let area01 = [new Date(item.startTime).getTime(), new Date(item.endTime).getTime()]
-          let area02 = [new Date(v.startTime).getTime(), new Date(v.endTime).getTime()]
-          let area = [new Date(Math.max(area01[0], area02[0])), new Date(Math.min(area01[1], area02[1]))]
-          v.area = area
+          v.area = [new Date(v.startTime), new Date(v.endTime)]
+          const area = v.area
           v.areaString = [this.$moment(area[0]).format('HH:mm'), this.$moment(area[1]).format('HH:mm')]
           v.minute = (area[1].getTime() - area[0].getTime()) / 1000 / 60//单位分钟 
           return v
