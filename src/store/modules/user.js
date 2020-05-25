@@ -1,6 +1,4 @@
 import { getInfo } from '@/api'
-import { MessageBox } from 'element-ui';
-
 const user = {
   state: {
     userInfo: null,
@@ -10,15 +8,11 @@ const user = {
     chooseWarehouse: null,
     roles: [],
     warehouseMap: [],
-    todolist: null
   },
 
   mutations: {
     SET_USERINFO: (state, info) => {
       state.userInfo = info
-    },
-    SET_TODOLIST: (state, todolist) => {
-      state.todolist = todolist
     },
   },
 
@@ -33,9 +27,6 @@ const user = {
         return res
       })
     },
-    setTodolist({ commit }, todolist) {
-      commit('SET_TODOLIST', todolist)
-    }
   }
 }
 

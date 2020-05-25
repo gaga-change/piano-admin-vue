@@ -6,7 +6,6 @@ import { deepExistMenu } from '@/utils/deepSortMenu'
 import { asyncRouterMap } from '@/router'
 
 const getters = {
-  todolist: state => state.user.todolist || {},
   sidebar: state => state.app.sidebar,
   userInfo: state => state.user.userInfo,
   chooseWarehouse: state => state.user.chooseWarehouse || sessionStorage.getItem('warehouse'),

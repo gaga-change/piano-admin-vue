@@ -40,6 +40,11 @@ export const getSpaceArea = params => http.get(`/api/spaceRules/getSpaceArea`, p
 /** 时间规则自动清理 */
 export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRules/spaceRulesClearNoTeacherOrStudent`, params)
 
+
+/** 获取待审核人数 */
+export const dashboardReadyDataNum = params => http.get(`/api/dashboard/readyDataNum`, params)
+
+
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)
 /** 退出登录 */

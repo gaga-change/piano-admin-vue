@@ -89,6 +89,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { dashboardReadyDataNum } from '@/api'
 import bgpath from '@/assets/images/bgimg.png'
 // import printpath from '@/assets/images/print.png'
 // import recordpath from '@/assets/images/inrecord.png'
@@ -99,12 +100,8 @@ import bgpath from '@/assets/images/bgimg.png'
 // import pickpath from '@/assets/images/pickingtask.png'
 // import confirmpath from '@/assets/images/confirm.png'
 let todoConfig = [
-  { name: '待审核', key: 'notCheck', link: '/toDoTask/toDoTaskAuditList?opStatus=0' },
-  { name: '待收货', key: 'receive', link: '/inwarehousing/inPlanList?receiveStatus=0' },
-  { name: '待上架', key: 'put', link: '/inwarehousing/goodsDetailList?isPut=0' },
-  { name: '待入库', key: 'notInStore', link: '/inwarehousing/record?isCreateOrder=0' },
-  { name: '待拣货', key: 'sort', link: '/outwarehousing/outPlanList?sortStatus=0' },
-  { name: '待复核', key: 'review', link: '/outwarehousing/temporaryStorage' },
+  { name: '待审核老师', key: 'teacherReadyNum', link: '/teacher/teacherList?status=0' },
+  { name: '待审核学生', key: 'studentReadyNum', link: '/student/studentList?status=0' },
 ]
 let quickLinkConfig = [
   [
@@ -130,17 +127,34 @@ export default {
       todoConfig,
       quickLinkConfig,
       quickLinkShowIndex: 0,
+      todolist: {
+        teacherReadyNum: 0,
+        studentReadyNum: 0,
+      },
     }
   },
   computed: {
     ...mapGetters([
       'totalmenu',
-      'todolist',
     ])
   },
+  created() {
+    this.initData()
+  },
   methods: {
-
-  }
+    initData() {
+      dashboardReadyDataNum().then(res => {
+        if (!res) return
+        // const { teacherReadyNum, studentReadyNum } = res
+        this.todolist = res
+      })
+    }
+  },
+   activated() {
+    if (!this.$store.state.tagsView.isNew) {
+      this.initData()
+    }
+  },
 }
 
 </script>

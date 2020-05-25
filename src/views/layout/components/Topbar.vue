@@ -111,7 +111,6 @@
 <script>
 import logoPath from '@/assets/images/logo.png'
 import { mapGetters } from 'vuex'
-// import { setWarehouseCode, todolist, logout } from '@/api'
 import { logout } from '@/api'
 export default {
   data() {
@@ -139,7 +138,6 @@ export default {
       }
     }
     return {
-      dataUrl: null,
       development: false,
       logoPath,
       modifyPasswordShow: false,
@@ -148,8 +146,6 @@ export default {
         newpassword: '',
         renewpassword: ''
       },
-      warehouse: '',
-      preWarehouse: '',
       formrule: {
         oldpassword: [
           { required: true, message: '请输入旧密码', trigger: 'blur' }
@@ -165,49 +161,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'sidebar',
-      'avatar',
-      'company',
       'userInfo',
-      'warehouseMap',
-      'chooseWarehouse',
     ]),
-    warehouseName() {
-      var warehouseName = ''
-      this.warehouseMap.map(item => {
-        if (this.warehouse == item.warehouseNo) {
-          warehouseName = item.warehouseName
-        }
-      })
-      return warehouseName
-    }
-  },
-  watch: {
-    chooseWarehouse() {
-      this.preWarehouse = this.chooseWarehouse
-      this.warehouse = this.chooseWarehouse
-    }
   },
   created() {
     if (process.env.NODE_ENV === "development") {
       this.development = true
     }
-    this.preWarehouse = this.chooseWarehouse
-    this.warehouse = this.chooseWarehouse || sessionStorage.getItem('warehouse')
-    if (this.warehouse) {
-      this.totallist()
-    }
   },
   mounted() {
   },
   methods: {
-    totallist() {
-      // todolist().then(res => {
-      //   if (res && res.data) {
-      //     this.$store.dispatch('setTodolist', res.data)
-      //   }
-      // })
-    },
     modifyPassword() {
       this.$refs.ruleForm2.validate((valid) => {
         if (valid) {
@@ -226,7 +190,6 @@ export default {
         }
       })
     },
-
     logout() {
       this.$confirm('确定退出吗？', '提示', {
         confirmButtonText: '确定',
@@ -270,9 +233,6 @@ export default {
   right: 35px;
   top: 0;
   color: #f2f2f2;
-  &.warehouse {
-    right: 160px;
-  }
   .welcome {
     line-height: 60px;
   }
