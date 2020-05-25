@@ -52,7 +52,7 @@ const formConfig = [
   { label: "开始时间", prop: "startTime", type: 'timePicker', format: 'HH:mm' },
   { label: "教师", prop: "teacher", type: 'selectRemote' },
   { label: "学生", prop: "student", type: 'selectRemote' },
-  { label: "状态", prop: "status", type: "enum", enum: "courseStatus", default: 0 },
+  { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap", default: 0 },
   { label: "课类别", prop: "classType", type: "enum", enum: "classType", default: 0 },
   { label: "课时长", prop: "classTime", type: "enum", enum: "classTime", default: 30 },
   { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },

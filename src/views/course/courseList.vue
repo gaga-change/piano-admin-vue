@@ -55,7 +55,7 @@ const tableConfig = [
   { label: "学生", prop: "student.name" },
   { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },
   { label: "学生状态", prop: "studentTag", type: "enum", enum: "courseStudentTag" },
-  { label: "状态", prop: "status", type: "enum", enum: "courseStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
   { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
   { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
   // { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
@@ -65,7 +65,7 @@ const tableConfig = [
 const searchConfig = [
   { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },
   { label: "学生状态", prop: "studentTag", type: "enum", enum: "courseStudentTag" },
-  { label: "状态", prop: "status", type: "enum", enum: "courseStatus" },
+  { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
   { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
   { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
 ];
