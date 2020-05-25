@@ -35,14 +35,14 @@
                   :class="{active: quickLinkShowIndex === 0}"
                   @click="quickLinkShowIndex=0"
                 >
-                  出库管理
+                  用户管理
                 </div>
                 <div
                   class="right-area"
                   :class="{active: quickLinkShowIndex === 1}"
                   @click="quickLinkShowIndex=1"
                 >
-                  入库管理
+                  课程管理
                 </div>
               </div>
               <div class="container">
@@ -71,17 +71,20 @@
     </div>
     <div class="right-area">
       <el-card class="">
-        <!-- <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>手持端二维码</span>
-        </div> -->
-        <item-title>手持端二维码</item-title>
+        <item-title>教师端公众号</item-title>
         <img
-          src="/app/api/appVersion/getQRCode"
-          style="width:100%"
-        >
+          :src="qrcodeTeacher"
+          alt=""
+          style="width:100%;background:contain;"
+        />
+      </el-card>
+      <el-card class="mt15">
+        <item-title>学生端公众号</item-title>
+        <img
+          :src="qrcodeStudent"
+          alt=""
+          style="width:100%;background:contain;"
+        />
       </el-card>
     </div>
   </div>
@@ -91,31 +94,20 @@
 import { mapGetters } from 'vuex'
 import { dashboardReadyDataNum } from '@/api'
 import bgpath from '@/assets/images/bgimg.png'
-// import printpath from '@/assets/images/print.png'
-// import recordpath from '@/assets/images/inrecord.png'
-// import salepath from '@/assets/images/onsale.png'
-// import Inpath from '@/assets/images/warehousing.png'
-// import outpath from '@/assets/images/outwarehousing.png'
-// import assignmentpath from '@/assets/images/assignment.png'
-// import pickpath from '@/assets/images/pickingtask.png'
-// import confirmpath from '@/assets/images/confirm.png'
+import qrcodeStudent from '@/assets/images/qrcode_student.jpg'
+import qrcodeTeacher from '@/assets/images/qrcode_teacher.jpg'
 let todoConfig = [
   { name: '待审核老师', key: 'teacherReadyNum', link: '/teacher/teacherList?status=0' },
   { name: '待审核学生', key: 'studentReadyNum', link: '/student/studentList?status=0' },
 ]
 let quickLinkConfig = [
   [
-    { name: '出库计划', icon: 'el-icon-edit-outline', link: '/outwarehousing/outPlanList' },
-    { name: '拣货任务', icon: 'el-icon-document-copy', link: '/outwarehousing/pickingtask' },
-    { name: '复核', icon: 'el-icon-document-checked', link: '/outwarehousing/temporaryStorage' },
-    { name: '出库单', icon: 'el-icon-folder-opened', link: '/outwarehousing/outboundOrder' },
+    { name: '教师管理', icon: 'el-icon-tickets', link: '/teacher/teacherList' },
+    { name: '学生管理', icon: 'el-icon-tickets', link: '/student/studentList' },
   ],
   [
-    { name: '入库计划', icon: 'el-icon-files', link: '/inwarehousing/inPlanList' },
-    { name: '收货单', icon: 'el-icon-sold-out', link: '/inwarehousing/inrecord' },
-    { name: '收货明细', icon: 'el-icon-coin', link: '/inwarehousing/goodsDetailList' },
-    { name: '上架记录', icon: 'el-icon-receiving', link: '/inwarehousing/record' },
-    { name: '入库单', icon: 'el-icon-folder-opened', link: '/inwarehousing/inboundOrder' },
+    { name: '课程列表', icon: 'el-icon-tickets', link: '/teacher/courseList' },
+    { name: '新建课程', icon: 'el-icon-edit-outline', link: '/course/autoCrateCourse' },
   ]
 ]
 let count = 0
@@ -124,6 +116,8 @@ export default {
   data() {
     return {
       bgpath,
+      qrcodeStudent,
+      qrcodeTeacher,
       todoConfig,
       quickLinkConfig,
       quickLinkShowIndex: 0,
@@ -150,7 +144,7 @@ export default {
       })
     }
   },
-   activated() {
+  activated() {
     if (!this.$store.state.tagsView.isNew) {
       this.initData()
     }
