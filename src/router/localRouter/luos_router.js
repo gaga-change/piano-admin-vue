@@ -59,6 +59,22 @@ export default [
     ]
   },
   {
+    path: '/share',
+    component: Layout,
+    redirect: 'shareList',
+    meta: { title: '分享管理', icon: 'el-icon-setting' },
+    hidden: false,
+    children: [
+      {
+        name: 'shareList',
+        path: 'shareList',
+        meta: { title: '分享日志', noCache: false, icon: 'el-icon-document' },
+        component: _import('share/shareList'),
+        hidden: false,
+      }
+    ]
+  },
+  {
     path: '/configManage',
     component: Layout,
     redirect: 'enumList',

@@ -44,6 +44,8 @@ export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/space
 /** 获取待审核人数 */
 export const dashboardReadyDataNum = params => http.get(`/api/dashboard/readyDataNum`, params)
 
+/** 分享日志列表 */
+export const sharesList = params => http.get(`/api/shares`, params)
 
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)

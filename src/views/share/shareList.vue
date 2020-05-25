@@ -5,51 +5,32 @@
       :tableConfig="tableConfig"
       :searchConfig="searchConfig"
       :api="listApi"
-      :showControl="true"
-      :controlWidth="160"
+      :parseData="parseData"
     >
-      <template slot-scope="scope">
-        <el-link
-          type="primary"
-          @click="$router.push({path:`/qualityTesting/detail`,query:{id: scope.row.id}})"
-        >详情</el-link>
-        <el-divider direction="vertical"></el-divider>
-      </template>
-      <template slot="btns">
-        <el-button
-          type="primary"
-          size="mini"
-          @click="handleCreate"
-        >
-          新建
-        </el-button>
-      </template>
+
     </base-list>
   </div>
 </template>
 
 <script>
-import { checkOrderList } from '@/api'
+import { sharesList } from '@/api'
 const tableConfig = [
-  { label: '质检单号 ', prop: 'orderCode', width: 140 },
-  { label: '收货单号 ', prop: 'receiveOrderCode', width: 140 },
-  { label: '是否虚拟区', prop: 'isVirtual', type: 'enum', enum: 'yesOrNoEnum' },
+  { label: '分享者', prop: 'shareUserName' },
+  { label: '被分享者', prop: 'subUserName' },
   { label: '创建时间', prop: 'createdAt', type: 'time', width: 140 },
   { label: '修改时间', prop: 'updatedAt', type: 'time', width: 140 },
-  { label: '备注', prop: 'remark' },
 ]
 const searchConfig = [
-  { label: '质检单号', prop: 'orderCode' },
-  { label: '创建时间', prop: 'createTimeArea', props: ['startDate', 'endDate'], type: 'timeArea' },
-  { label: '库区性质', prop: 'warehouseAreaNature', type: 'enum', enum: 'warehouseAreaNatureEnum' },
+  { label: '关注者Openid', prop: 'subscribeOpenid' },
+  { label: '分享者Openid', prop: 'shareByOpenid' },
 ]
 export default {
-  name: 'NAME',
+  name: 'shareList',
   data() {
     return {
       tableConfig,
       searchConfig,
-      listApi: checkOrderList,
+      listApi: sharesList,
       // 可选 附加查询条件
       appendSearchParams: {},
     }
@@ -61,11 +42,11 @@ export default {
     },
     /** 可选 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || []
-      let total = res.data.total
+      let data = res.list || []
+      let total = res.total
       data.forEach(v => {
-        v.updateLockStatusOutLoading = false
-        v.updateLockStatusInLoading = false
+        v.shareUserName = v.shareUser ? (`${v.shareUser.name}-${v.shareUser.phone}`) : v.shareOpenid
+        v.subUserName = v.subscribeUser ? v.subscribeUser.name : v.subscribeOpenid
       })
       return { data, total }
     },
