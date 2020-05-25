@@ -16,13 +16,14 @@
 import { sharesList } from '@/api'
 const tableConfig = [
   { label: '分享者', prop: 'shareUserName' },
-  { label: '被分享者', prop: 'subUserName' },
+  { label: '关注者', prop: 'subUserName' },
+  { label: '客户端', prop: 'type', type: 'enum', enum: 'shareTypeMap' },
   { label: '创建时间', prop: 'createdAt', type: 'time', width: 140 },
   { label: '修改时间', prop: 'updatedAt', type: 'time', width: 140 },
 ]
 const searchConfig = [
+  { label: '分享者Openid', prop: 'shareOpenid' },
   { label: '关注者Openid', prop: 'subscribeOpenid' },
-  { label: '分享者Openid', prop: 'shareByOpenid' },
 ]
 export default {
   name: 'shareList',
