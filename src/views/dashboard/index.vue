@@ -27,7 +27,6 @@
             </el-card>
           </el-col>
           <el-col :span="12">
-
             <div class="tabs">
               <div class="header-area">
                 <div

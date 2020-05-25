@@ -13,13 +13,13 @@
         <sidebar-item :routes="routes"></sidebar-item>
       </el-menu>
     </scroll-bar>
-    <div class="beian">
+    <!-- <div class="beian">
       <span>系统版本：{{version}}</span>
       <a
         href="http://www.beian.miit.gov.cn"
         target="_blank"
       >浙ICP备14018558号-1</a>
-    </div>
+    </div> -->
   </div>
 </template>
 
