@@ -209,7 +209,11 @@ export default {
           this.$set(this.searchForms, v.prop, undefined)
         }
         if (query[v.prop] !== undefined && query[v.prop] !== null) {
-          this.$set(this.searchForms, v.prop, query[v.prop] + '')
+          let temp = query[v.prop]
+          if (/^\d+$/.test(temp)) {
+            temp = Number(temp)
+          }
+          this.$set(this.searchForms, v.prop, temp)
         }
       })
     },

@@ -16,10 +16,9 @@
         >四分音艺术后台管理系统</h3>
         <div v-if="usernameSubmit">
           <el-form-item prop="username">
-            <span class="svg-container svg-container_login">
-              <!-- <svg-icon icon-class="pcuser" style="color:#f4b15a;font-size:18px;"/> -->
+            <span class="svg-container">
               <i
-                class="el-icon-user-solid"
+                class="el-icon-user"
                 style="color:#f4b15a;font-size:18px;"
               ></i>
             </span>
@@ -33,10 +32,11 @@
           </el-form-item>
           <el-form-item prop="password">
             <span class="svg-container">
-              <svg-icon
-                icon-class="password"
-                style="color:#f4b15a;font-size:20px;"
-              ></svg-icon>
+
+              <i
+                class="el-icon-lock"
+                style="color:#f4b15a;font-size:18px;"
+              ></i>
             </span>
             <el-input
               name="password"
