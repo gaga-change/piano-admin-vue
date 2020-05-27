@@ -55,7 +55,14 @@ export default [
         meta: { title: '课程列表', noCache: false, icon: 'el-icon-document' },
         component: _import('course/courseList'),
         hidden: false,
-      }
+      },
+      {
+        name: 'leaveAreaList',
+        path: 'leaveAreaList',
+        meta: { title: '请假管理', noCache: false, icon: 'el-icon-document' },
+        component: _import('leaveArea/leaveAreaList'),
+        hidden: false,
+      },
     ]
   },
   {

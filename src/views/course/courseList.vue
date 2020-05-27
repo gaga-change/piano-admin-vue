@@ -12,6 +12,7 @@
       <template slot-scope="scope">
         <el-link
           type="primary"
+          :disabled="scope.row.status === 2"
           @click="
             selectedRow = scope.row;
             courseFormDialogVisible = true;

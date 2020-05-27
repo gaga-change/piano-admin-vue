@@ -9,6 +9,10 @@ export const enumsList = params => http.get(`/api/enums`, params)
 /** 获取所有枚举（简化字段） */
 export const enumsTotal = params => http.get('/api/enums/enumsTotal', params)
 
+/** 查询所有用户（老师&学生） */
+export const personList = params => http.get('/api/persons', params)
+export const personDetail = id => http.get(`/api/persons/${id}`)
+
 /** 老师接口 */
 export const teachersAdd = params => http.post(`/api/teachers`, params)
 export const teachersDel = id => http.delete(`/api/teachers/${id}`)
@@ -24,6 +28,8 @@ export const coursesDetail = id => http.get(`/api/courses/${id}`)
 export const coursesList = params => http.get(`/api/courses`, params)
 /** 获取周期内的课程 */
 export const coursesActivateArea = params => http.get(`/api/courses/coursesActivateArea`, params)
+/** 获取某个某天的所有课程 */
+export const coursesFindByPersonAndDay = params => http.get(`/api/courses/findByPersonAndDay`, params)
 
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
@@ -40,6 +46,12 @@ export const getSpaceArea = params => http.get(`/api/spaceRules/getSpaceArea`, p
 /** 时间规则自动清理 */
 export const spaceRulesClearNoTeacherOrStudent = params => http.post(`/api/spaceRules/spaceRulesClearNoTeacherOrStudent`, params)
 
+/** 请假接口 */
+export const leaveAreasAdd = params => http.post(`/api/leaveAreas`, params)
+export const leaveAreasDel = id => http.delete(`/api/leaveAreas/${id}`)
+export const leaveAreasModify = (id, params) => http.put(`/api/leaveAreas/${id}`, params)
+export const leaveAreasDetail = id => http.get(`/api/leaveAreas/${id}`)
+export const leaveAreasList = params => http.get(`/api/leaveAreas`, params)
 
 /** 获取待审核人数 */
 export const dashboardReadyDataNum = params => http.get(`/api/dashboard/readyDataNum`, params)

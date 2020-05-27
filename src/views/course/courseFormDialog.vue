@@ -123,12 +123,18 @@ export default {
           if (typeof this.rowData.teacher === 'object') {
             item.list = [{ label: this.rowData.teacher.name, value: this.rowData.teacher._id }]
             item.default = this.rowData.teacher._id
+          } else {
+            item.list = []
+            item.default = undefined
           }
         }
         if (item.prop === 'student') {
           if (typeof this.rowData.student === 'object') {
             item.list = [{ label: this.rowData.student.name, value: this.rowData.student._id }]
             item.default = this.rowData.student._id
+          } else {
+            item.list = []
+            item.default = undefined
           }
         }
       });
