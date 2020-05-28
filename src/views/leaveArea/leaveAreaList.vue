@@ -10,14 +10,16 @@
       :parseData="parseData"
     >
       <template slot-scope="scope">
-        <el-link
-          type="primary"
-          @click="
+        <template v-if="scope.row.course">
+          <el-link
+            type="primary"
+            @click="
             selectedRow = scope.row;
             leaveAreaFormDialogVisible = true;
           "
-        >修改</el-link>
-        <el-divider direction="vertical"></el-divider>
+          >修改</el-link>
+          <el-divider direction="vertical"></el-divider>
+        </template>
         <el-link
           type="primary"
           @click="handleDelete(scope.row)"
@@ -56,6 +58,7 @@ const tableConfig = [
   { label: '状态', prop: 'status', type: 'enum', enum: 'leaveAreaStatusMap' },
   { label: '创建时间', prop: 'createdAt', type: 'time', width: 140 },
   { label: '修改时间', prop: 'updatedAt', type: 'time', width: 140 },
+  { label: '理由', prop: 'reason' },
   { label: '备注', prop: 'remark' },
 ]
 const searchConfig = [
@@ -85,8 +88,10 @@ export default {
       let data = res.list || []
       let total = res.total
       data.forEach(v => {
-        v.startTime = v.course.startTime
-        v.endTime = v.course.endTime
+        if (v.course) {
+          v.startTime = v.course.startTime
+          v.endTime = v.course.endTime
+        }
         if (v.person) {
           v.typeName = v.person.kind === 'teacher' ? '教师' : '学生'
           v.name = v.person.name
