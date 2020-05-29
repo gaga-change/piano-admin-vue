@@ -54,8 +54,8 @@ const tableConfig = [
   { label: "结束时间", prop: "endTime", type: 'time', format: 'HH:mm' },
   { label: "教师", prop: "teacher.name" },
   { label: "学生", prop: "student.name" },
-  { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },
-  { label: "学生状态", prop: "studentTag", type: "enum", enum: "courseStudentTag" },
+  { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
+  { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
   { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
   { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
@@ -64,8 +64,8 @@ const tableConfig = [
   { label: "备注", prop: "remark" }
 ];
 const searchConfig = [
-  { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },
-  { label: "学生状态", prop: "studentTag", type: "enum", enum: "courseStudentTag" },
+  { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
+  { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
   { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
   { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },

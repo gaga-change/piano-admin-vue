@@ -55,8 +55,8 @@ const formConfig = [
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap", default: 0 },
   { label: "课类别", prop: "classType", type: "enum", enum: "classType", default: 0 },
   { label: "课时长", prop: "classTime", type: "enum", enum: "classTime", default: 30 },
-  { label: "老师状态", prop: "teacherTag", type: "enum", enum: "courseTeacherTag" },
-  { label: "学生状态", prop: "studentTag", type: "enum", enum: "courseStudentTag" },
+  { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
+  { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "备注", prop: "remark" },
 ];
 const rules = {
