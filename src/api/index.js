@@ -1,4 +1,5 @@
 import http from './http'
+import store from '../store'
 
 /** 枚举接口 */
 export const enumsAdd = params => http.post(`/api/enums`, params)
@@ -52,6 +53,18 @@ export const leaveAreasDel = id => http.delete(`/api/leaveAreas/${id}`)
 export const leaveAreasModify = (id, params) => http.put(`/api/leaveAreas/${id}`, params)
 export const leaveAreasDetail = id => http.get(`/api/leaveAreas/${id}`)
 export const leaveAreasList = params => http.get(`/api/leaveAreas`, params)
+
+/** 教师类型 */
+export const teacherTypesAdd = params => http.post(`/api/teacherTypes`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const teacherTypesModify = (id, params) => http.put(`/api/teacherTypes/${id}`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const teacherTypesDetail = id => http.get(`/api/teacherTypes/${id}`)
+export const teacherTypesList = params => http.get(`/api/teacherTypes`, params)
 
 /** 获取待审核人数 */
 export const dashboardReadyDataNum = params => http.get(`/api/dashboard/readyDataNum`, params)

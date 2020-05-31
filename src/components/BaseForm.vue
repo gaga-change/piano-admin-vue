@@ -15,21 +15,12 @@
           :label="item.label"
           :prop="item.prop"
         >
-          <el-select
+          <MapSelect
             v-if="item.type === 'enum'"
             v-model="formData[item.prop]"
-            :placeholder="`请选择${item.label}`"
-            style="width:200px;"
             :disabled="item.disabled"
-            clearable
-          >
-            <el-option
-              v-for="item in mapConfig[item.enum]"
-              :key="item.name"
-              :label="item.name"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+            :enumName="item.enum"
+          />
           <!-- 多行文本框 -->
           <el-input
             v-else-if="item.type === 'textarea'"

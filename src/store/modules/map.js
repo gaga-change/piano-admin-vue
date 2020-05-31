@@ -1,3 +1,5 @@
+import * as localEnum from '@/utils/enum'
+
 import { enumsTotal } from '@/api'
 
 const map = {
@@ -32,6 +34,10 @@ async function config() {
   data.forEach(v => {
     config[v.name] = v.keyValue
   })
+  Object.keys(localEnum).forEach(key => {
+    config[key] = localEnum[key]
+  })
+  console.log(config)
   return config
 }
 

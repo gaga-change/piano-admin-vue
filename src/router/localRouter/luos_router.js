@@ -1,5 +1,6 @@
 const _import = require('../_import_' + process.env.NODE_ENV)
 /* Layout */
+
 import Layout from '../../views/layout/Layout'
 
 export default [
@@ -88,6 +89,13 @@ export default [
     meta: { title: '系统配置中心', icon: 'el-icon-setting' },
     hidden: false,
     children: [
+      {
+        name: 'teacherTypeList',
+        path: 'teacherTypeList',
+        meta: { title: '教师类型', noCache: false, icon: 'el-icon-edit' },
+        component: _import('dict/teacherType/teacherTypeList'),
+        hidden: false,
+      },
       {
         name: 'enumList',
         path: 'enumList',

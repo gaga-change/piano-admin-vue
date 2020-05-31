@@ -2,7 +2,7 @@
   <div class="">
     <!-- 600px【小型，单列】 70% 【中型，双列】-->
     <el-dialog
-      :title="`${rowData._id ? '修改' : '新建'}教师`"
+      :title="`${rowData._id ? '修改' : '新建'}教师类型`"
       :visible="visible"
       width="400px"
       :before-close="handleClose"
@@ -41,23 +41,14 @@
 
 <script>
 const formConfig = [
-  { label: "姓名", prop: "name", width: 120 },
-  { label: "手机号码", prop: "phone" },
-  { label: "学校", prop: "school" },
-  { label: "专业", prop: "major" },
-  { label: "类型", prop: "type", type: "enum", enum: "teacherType" },
-  { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
-  { label: "openid", prop: "openid" },
+  { label: "名称", prop: "name", width: 120, default: '123321' },
+  { label: "状态", prop: "disabled", type: "enum", enum: "disabledEnum", default: false },
   { label: "备注", prop: "remark" }
 ];
 const rules = {
   name: [
     { required: true, message: "必填项", trigger: ["blur", "change"] }
   ],
-  phone: [
-    { required: true, message: "必填项", trigger: ["blur", "change"] }
-  ],
-  status: [{ required: true, message: "必填项", trigger: ["blur", "change"] }]
 };
 /**
  * 父级设置
@@ -67,7 +58,7 @@ const rules = {
       @submited="getTableData()"
     />
  */
-import { teachersAdd, teachersModify } from "@/api";
+import { teacherTypesAdd, teacherTypesModify } from "@/api";
 export default {
   props: {
     visible: {
@@ -95,11 +86,9 @@ export default {
           (this.rowData[item.prop] === null || this.rowData[item.prop] === undefined)
             ? item.default
             : this.rowData[item.prop];
-        // this.rowData[item.prop] === null
-        // ? undefined
-        // : this.rowData[item.prop];
+
       });
-      console.log(this.$copy(this.formConfig))
+
       this.$nextTick(() => {
         this.$refs["form"].init();
       });
@@ -116,7 +105,7 @@ export default {
     /** 确定 */
     confirm() {
       const isModify = this.row && this.row._id;
-      const api = isModify ? teachersModify : teachersAdd;
+      const api = isModify ? teacherTypesModify : teacherTypesAdd;
       this.$refs["form"].validate((valid, params) => {
         if (valid) {
           this.loading = true;
@@ -134,7 +123,6 @@ export default {
     /** 关闭弹窗 */
     close() {
       // 初始化表单
-      this.$refs["form"] && this.$refs["form"].resetFields();
       // 初始化没有挂载到表单的数据
       // ...
       this.visible && this.$emit("update:visible", false);

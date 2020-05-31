@@ -95,6 +95,14 @@ export default {
       this.formConfig.forEach(item => {
         item.default = this.rowData[item.prop] === null ? undefined : this.rowData[item.prop]
       })
+
+      // this.formConfig.forEach(item => {
+      //   item.default =
+      //     (this.rowData[item.prop] === null || this.rowData[item.prop] === undefined)
+      //       ? item.default
+      //       : this.rowData[item.prop];
+      // });
+
       this.$nextTick(() => {
         this.$refs['form'].init()
       })
