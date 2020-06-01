@@ -42,7 +42,7 @@
 <script>
 const formConfig = [
   { label: "名称", prop: "name", width: 120 },
-  { label: "时长（分钟）", prop: "time", type: 'number', min: 1, max: 999 },
+  { label: "时长（分钟）", prop: "time", type: 'number', min: 1, max: 999, disabled: false },
   { label: "状态", prop: "disabled", type: "enum", enum: "disabledEnum", default: false },
   { label: "备注", prop: "remark" }
 ];
@@ -82,14 +82,19 @@ export default {
     /** 监听数据切换，重置表单 */
     visible(val) {
       if (!val) return;
+      this.formConfig = this.$copy(formConfig)
       this.formConfig.forEach(item => {
         item.default =
           (this.rowData[item.prop] === null || this.rowData[item.prop] === undefined)
             ? item.default
             : this.rowData[item.prop];
-
       });
-
+      let timeFormItem = this.formConfig.find(v => v.prop === 'time')
+      if (this.rowData._id) {
+        timeFormItem.disabled = true
+      } else {
+        timeFormItem.disabled = false
+      }
       this.$nextTick(() => {
         this.$refs["form"].init();
       });

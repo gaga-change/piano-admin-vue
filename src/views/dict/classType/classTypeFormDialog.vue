@@ -81,6 +81,7 @@ export default {
     /** 监听数据切换，重置表单 */
     visible(val) {
       if (!val) return;
+      this.formConfig = this.$copy(formConfig)
       this.formConfig.forEach(item => {
         item.default =
           (this.rowData[item.prop] === null || this.rowData[item.prop] === undefined)

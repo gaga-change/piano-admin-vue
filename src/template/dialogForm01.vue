@@ -178,6 +178,7 @@ export default {
     /** 监听数据切换，重置表单。为何不监听rowData?因为主组件visible一一对应，但选中数据不是，selectRow 是多个弹窗共享的 */
     visible(val) {
       if (!val) return
+      this.formConfig = this.$copy(formConfig)
       Object.keys(this.formData).forEach(key => {
         this.$set(this.formData, key, this.rowData[key] === null ? undefined : this.rowData[key])
       })
