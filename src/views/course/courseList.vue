@@ -42,6 +42,7 @@
       :row="selectedRow"
       @submited="getTableData()"
     />
+
   </div>
 </template>
 
@@ -57,18 +58,18 @@ const tableConfig = [
   { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
-  { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
-  { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
-  // { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
-  // { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
+  { label: "课类别", prop: "classType.name" },
+  { label: "课时长", prop: "classTime.name" },
+  { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
+  { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
   { label: "备注", prop: "remark" }
 ];
 const searchConfig = [
   { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
-  { label: "课时长", prop: "classType", type: "enum", enum: "classType" },
-  { label: "课类别", prop: "classTime", type: "enum", enum: "classTime" },
+  { label: "课类别", prop: "classType", type: "enum", enum: "classType" },
+  { label: "课时长", prop: "classTime", type: "enum", enum: "classTime" },
 ];
 export default {
   name: 'courseList',

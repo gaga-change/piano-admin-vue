@@ -66,6 +66,30 @@ export const teacherTypesModify = (id, params) => http.put(`/api/teacherTypes/${
 export const teacherTypesDetail = id => http.get(`/api/teacherTypes/${id}`)
 export const teacherTypesList = params => http.get(`/api/teacherTypes`, params)
 
+/** 课时长 */
+export const classTimesAdd = params => http.post(`/api/classTimes`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const classTimesModify = (id, params) => http.put(`/api/classTimes/${id}`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const classTimesDetail = id => http.get(`/api/classTimes/${id}`)
+export const classTimesList = params => http.get(`/api/classTimes`, params)
+
+/** 课类别 */
+export const classTypesAdd = params => http.post(`/api/classTypes`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const classTypesModify = (id, params) => http.put(`/api/classTypes/${id}`, params).then(res => {
+  store.dispatch('gitMap')
+  return res
+})
+export const classTypesDetail = id => http.get(`/api/classTypes/${id}`)
+export const classTypesList = params => http.get(`/api/classTypes`, params)
+
 /** 获取待审核人数 */
 export const dashboardReadyDataNum = params => http.get(`/api/dashboard/readyDataNum`, params)
 

@@ -230,7 +230,7 @@ export default {
         spaceArea: undefined,
         checkArea: undefined,
         sourceStartTime: undefined,
-        classType: 0, // 课类别
+        classType: undefined, // 课类别
         classTime: undefined, // 课时长
         sourceStartTime: undefined, // 课开始时间
       },
@@ -254,13 +254,14 @@ export default {
       let minute = this.matchSpaceArea && this.matchSpaceArea.minute
       if (!minute) return null
       return (this.mapConfig.classTime || []).filter(v => {
-        return v.value <= (minute || 0)
+        return v.time <= (minute || 0)
       })
     },
     startTimeRange() {
       if (!this.formData.classTime) return ''
       if (!this.matchSpaceArea) return ''
-      return `${this.$moment(this.matchSpaceArea.area[0]).format('HH:mm:ss')} - ${this.$moment(this.matchSpaceArea.area[1].getTime() - this.formData.classTime * 60 * 1000).format('HH:mm:ss')}`
+      const timeLang = this.mapConfig['classTime'].find(v => v.value === this.formData.classTime).time
+      return `${this.$moment(this.matchSpaceArea.area[0]).format('HH:mm:ss')} - ${this.$moment(this.matchSpaceArea.area[1].getTime() - timeLang * 60 * 1000).format('HH:mm:ss')}`
     }
   },
   created() {
@@ -278,7 +279,8 @@ export default {
             params.teacher = this.matchSpaceArea.person._id
           }
           params.startTime = params.sourceStartTime
-          params.endTime = new Date(params.sourceStartTime.getTime() + params.classTime * 60 * 1000)
+          const timeLang = this.mapConfig['classTime'].find(v => v.value === params.classTime).time
+          params.endTime = new Date(params.sourceStartTime.getTime() + timeLang * 60 * 1000)
           params.status = 0
           this.coursesAddLoading = true
           coursesAdd(params).then(res => {
@@ -389,7 +391,14 @@ export default {
       }
       return `${this.$doubleNum(h)}:${this.$doubleNum(m)}`;
     },
-  }
+
+  },
+  activated() {
+    if (!this.$store.state.tagsView.isNew) {
+      this.baseChange()
+      this.formData.classType = undefined
+    }
+  },
 }
 </script>
 

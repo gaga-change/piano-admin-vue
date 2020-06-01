@@ -85,7 +85,7 @@ export default [
   {
     path: '/configManage',
     component: Layout,
-    redirect: 'enumList',
+    redirect: 'teacherTypeList',
     meta: { title: '系统配置中心', icon: 'el-icon-setting' },
     hidden: false,
     children: [
@@ -97,10 +97,17 @@ export default [
         hidden: false,
       },
       {
-        name: 'enumList',
-        path: 'enumList',
-        meta: { title: '枚举配置', noCache: false, icon: 'el-icon-edit' },
-        component: _import('configManage/enumList'),
+        name: 'classTimeList',
+        path: 'classTimeList',
+        meta: { title: '课时长', noCache: false, icon: 'el-icon-edit' },
+        component: _import('dict/classTime/classTimeList'),
+        hidden: false,
+      },
+      {
+        name: 'classTypeList',
+        path: 'classTypeList',
+        meta: { title: '课类型', noCache: false, icon: 'el-icon-edit' },
+        component: _import('dict/classType/classTypeList'),
         hidden: false,
       },
       {

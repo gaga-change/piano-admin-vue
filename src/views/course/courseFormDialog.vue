@@ -53,10 +53,10 @@ const formConfig = [
   { label: "教师", prop: "teacher", type: 'selectRemote' },
   { label: "学生", prop: "student", type: 'selectRemote' },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap", default: 0 },
-  { label: "课类别", prop: "classType", type: "enum", enum: "classType", default: 0 },
-  { label: "课时长", prop: "classTime", type: "enum", enum: "classTime", default: 30 },
-  { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap" },
-  { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap" },
+  { label: "课类别", prop: "classType", type: "enum", enum: "classType" },
+  { label: "课时长", prop: "classTime", type: "enum", enum: "classTime" },
+  { label: "老师状态", prop: "teacherStatus", type: "enum", enum: "coursePersonStatusMap", default: 0 },
+  { label: "学生状态", prop: "studentStatus", type: "enum", enum: "coursePersonStatusMap", default: 0 },
   { label: "备注", prop: "remark" },
 ];
 const rules = {
@@ -107,6 +107,9 @@ export default {
     /** 防止父级传递 null */
     rowData() {
       return this.row || {};
+    },
+    mapConfig() {
+      return this.$store.state.map.mapConfig
     }
   },
   watch: {
@@ -195,7 +198,6 @@ export default {
           startTime.setFullYear(date.getFullYear(), date.getMonth(), date.getDate())
           startTime.setSeconds(0, 0)
           params.startTime = startTime
-          params.endTime = new Date(startTime.getTime() + params.classTime * 60 * 1000)
           this.loading = true;
           delete params.date
           let temp = isModify ? [this.row._id, params] : [params];

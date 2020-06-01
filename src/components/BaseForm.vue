@@ -37,11 +37,11 @@
           <el-input-number
             style="width:200px;"
             v-else-if="item.type === 'number'"
-            placeholder="最小单位"
+            placeholder="请输入"
             v-model="formData[item.prop]"
-            :precision="0"
-            :min="0"
-            :max="99999999"
+            :precision="item.precision || 0"
+            :min="item.min || 0"
+            :max="item.max || 99999999"
             :disabled="item.disabled"
             controls-position="right"
           ></el-input-number>
