@@ -181,9 +181,12 @@ export default {
   },
   methods: {
     init() {
+      const temp = this.$copy(this.formData)
       this.config.forEach(item => {
-        this.$set(this.formData, item.prop, item.default)
+        temp[item.prop] = item.default
       })
+      this.formData = temp
+      this.$refs['form'] && this.$refs['form'].clearValidate()
     },
     /** 确定 */
     validate(callback) {
@@ -192,8 +195,12 @@ export default {
       })
     },
     resetFields() {
-      this.$refs['form'] && this.$refs['form'].resetFields()
-
+      // this.$nextTick(() => {
+      //   Object.keys(this.formData).forEach(key => {
+      //     this.formData[key] = undefined
+      //   })
+      //   this.$refs['form'] && this.$refs['form'].clearValidate()
+      // })
     }
   }
 }
