@@ -28,7 +28,7 @@ export default {
       type: Boolean
     },
     value: {
-      type: [String, Number, Object],
+      type: [String, Number, Object, Boolean],
     },
     enumName: {
       type: String

@@ -83,7 +83,6 @@ const tableConfig = [
   { label: "手机号码", prop: "phone" },
   { label: "学校", prop: "school" },
   { label: "专业", prop: "major" },
-  { label: "等级", prop: "grade", type: "enum", enum: "teacherGrade" },
   { label: "类型", prop: "type.name" },
   { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
   { label: "创建时间", prop: "createdAt", type: "time", width: 140 },

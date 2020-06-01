@@ -41,7 +41,7 @@
 
 <script>
 const formConfig = [
-  { label: "名称", prop: "name", width: 120, default: '123321' },
+  { label: "名称", prop: "name", width: 120 },
   { label: "状态", prop: "disabled", type: "enum", enum: "disabledEnum", default: false },
   { label: "备注", prop: "remark" }
 ];
