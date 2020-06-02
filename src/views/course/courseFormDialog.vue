@@ -50,8 +50,8 @@ const formConfig = [
     }
   },
   { label: "开始时间", prop: "startTime", type: 'timePicker', format: 'HH:mm' },
-  { label: "教师", prop: "teacher", type: 'selectRemote' },
-  { label: "学生", prop: "student", type: 'selectRemote' },
+  { label: "教师", prop: "teacher", type: 'selectRemote', list: [], default: undefined, loading: false, remoteMethod: undefined },
+  { label: "学生", prop: "student", type: 'selectRemote', list: [], default: undefined, loading: false, remoteMethod: undefined },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap", default: 0 },
   { label: "课类别", prop: "classType", type: "enum", enum: "classType" },
   { label: "课时长", prop: "classTime", type: "enum", enum: "classTime" },
@@ -142,43 +142,42 @@ export default {
           }
         }
       });
+      const teacherConfig = this.formConfig.find(v => v.prop === 'teacher')
+      teacherConfig.loading = false
+      teacherConfig.remoteMethod = (query) => {
+        const teacherConfig = this.formConfig.find(v => v.prop === 'teacher')
+        teacherConfig.loading = true
+        teachersList({ name: query }).then(res => {
+          teacherConfig.loading = false
+          if (!res) return
+          teacherConfig.list = res.list.map(v => ({
+            label: v.name,
+            value: v._id
+          }))
+          console.log(this.$copy(this.formConfig))
+        })
+      }
+      const studentConfig = this.formConfig.find(v => v.prop === 'student')
+      studentConfig.loading = false
+      studentConfig.remoteMethod = (query) => {
+        const studentConfig = this.formConfig.find(v => v.prop === 'student')
+        studentConfig.loading = true
+        studentsList({ name: query }).then(res => {
+          studentConfig.loading = false
+          if (!res) return
+          studentConfig.list = res.list.map(v => ({
+            label: v.name,
+            value: v._id
+          }))
+        })
+      }
       this.$nextTick(() => {
         this.$refs["form"].init();
       });
     }
   },
   data() {
-    const teacherConfig = formConfig.find(v => v.prop === 'teacher')
-    teacherConfig.list = []
-    teacherConfig.loading = false
-    teacherConfig.remoteMethod = (query) => {
-      this.teacherConfig.loading = true
-      teachersList({ name: query }).then(res => {
-        this.teacherConfig.loading = false
-        if (!res) return
-        this.teacherConfig.list = res.list.map(v => ({
-          label: v.name,
-          value: v._id
-        }))
-      })
-    }
-    const studentConfig = formConfig.find(v => v.prop === 'student')
-    studentConfig.list = []
-    studentConfig.loading = false
-    studentConfig.remoteMethod = (query) => {
-      this.studentConfig.loading = true
-      studentsList({ name: query }).then(res => {
-        this.studentConfig.loading = false
-        if (!res) return
-        this.studentConfig.list = res.list.map(v => ({
-          label: v.name,
-          value: v._id
-        }))
-      })
-    }
     return {
-      teacherConfig,
-      studentConfig,
       formConfig,
       rules,
       loading: false
