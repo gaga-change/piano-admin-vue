@@ -18,6 +18,13 @@ export default [
         component: _import('teacher/teacherList'),
         hidden: false,
       },
+      {
+        name: 'teacherTotalCourse',
+        path: 'teacherTotalCourse',
+        meta: { title: '教师课程统计', noCache: false },
+        component: _import('teacher/teacherTotalCourse'),
+        hidden: true,
+      },
     ]
   },
   {
@@ -108,6 +115,13 @@ export default [
         path: 'classTypeList',
         meta: { title: '课类型', noCache: false, icon: 'el-icon-edit' },
         component: _import('dict/classType/classTypeList'),
+        hidden: false,
+      },
+      {
+        name: 'bonusRuleList',
+        path: 'bonusRuleList',
+        meta: { title: '工资规则', noCache: false, icon: 'el-icon-edit' },
+        component: _import('dict/bonusRule/bonusRuleList'),
         hidden: false,
       },
       {

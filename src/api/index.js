@@ -25,6 +25,8 @@ export const coursesList = params => http.get(`/api/courses`, params)
 export const coursesActivateArea = params => http.get(`/api/courses/coursesActivateArea`, params)
 /** 获取某个某天的所有课程 */
 export const coursesFindByPersonAndDay = params => http.get(`/api/courses/findByPersonAndDay`, params)
+/** 查询某人某个月的所有课程 */
+export const coursesFindByPersonAndMonth = params => http.get(`/api/courses/findByPersonAndMonth`, params)
 
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
@@ -32,6 +34,13 @@ export const studentsDel = id => http.delete(`/api/students/${id}`)
 export const studentsModify = (id, params) => http.put(`/api/students/${id}`, params)
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
+
+/** 工资规则接口 */
+export const bonusRulesAdd = params => http.post(`/api/bonusRules`, params)
+export const bonusRulesDel = id => http.delete(`/api/bonusRules/${id}`)
+export const bonusRulesModify = (id, params) => http.put(`/api/bonusRules/${id}`, params)
+export const bonusRulesDetail = id => http.get(`/api/bonusRules/${id}`)
+export const bonusRulesList = params => http.get(`/api/bonusRules`, params)
 
 /** 时间规则接口 */
 export const spaceRulesUpdate = params => http.post(`/api/spaceRules/spaceRulesUpdate`, params)

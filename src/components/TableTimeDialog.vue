@@ -135,7 +135,6 @@ export default {
       if (!courses || !sapceRules) return
       this.drawCourse(courses)
       this.drawSpaceRules(sapceRules.list)
-      console.log(courses, sapceRules)
     })
     this.initDraw()
   },
@@ -155,7 +154,6 @@ export default {
       }
       this.tableTime.push(`00:00`)
       this.tableTitle = title
-      console.log(title)
     },
     // 绘制课表
     drawCourse(courses) {
@@ -176,7 +174,6 @@ export default {
         const hour = startTime.getHours()
         const minute = startTime.getMinutes()
         const areaMinute = (endTime.getTime() - startTime.getTime()) / 1000 / 60
-        console.log(areaMinute)
         let startMinute = hour * 60 + minute // 开始分钟数
 
         /** 传入分钟数，计算出对应的高度 */
@@ -187,14 +184,12 @@ export default {
           // 前面块数量 * 块高度+margin   +   占用当前块的高度
           let num = Math.floor(minute / 30)
           let height = (minute - num * 30) / 30 * GRID_HEIGHT
-          console.log(minute, num, height)
           return num * (GRID_HEIGHT + MARGIN_BOTTOM) + height
         }
         const weekIndex = (week + 7 - new Date().getDay()) % 7
         res[weekIndex] = res[weekIndex] || []
         const top = _(startMinute)
         const height = _(startMinute + areaMinute)
-        console.log(top, height)
         res[weekIndex].push({
           top: top + 'px',
           height: height - top + 'px',
@@ -203,7 +198,6 @@ export default {
         })
 
       })
-      console.log(res)
       return res
     },
     /** 关闭弹窗 */

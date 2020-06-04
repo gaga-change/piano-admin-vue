@@ -154,7 +154,6 @@ export default {
             label: v.name,
             value: v._id
           }))
-          console.log(this.$copy(this.formConfig))
         })
       }
       const studentConfig = this.formConfig.find(v => v.prop === 'student')

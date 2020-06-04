@@ -30,14 +30,12 @@ const map = {
 async function config() {
   let config = {};
   const data = await enumsTotal()
-  // const data = enums
   data.forEach(v => {
     config[v.name] = v.keyValue
   })
   Object.keys(localEnum).forEach(key => {
     config[key] = localEnum[key]
   })
-  console.log(config)
   return config
 }
 

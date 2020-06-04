@@ -20,9 +20,7 @@
       </template>
       <template v-else>
         <span class="value-content">
-          <template v-if="detail[item.prop] !== null && detail[item.prop] !== undefined && detail[item.prop] !== ''">
-            {{detail[item.prop]}}{{item.unit || ''}}
-          </template>
+          {{detail | propCheck(item.prop)}}{{item.unit || ''}}
         </span>
       </template>
     </div>
@@ -64,9 +62,18 @@ export default {
     ])
   },
   filters: {
+    propCheck(detail, prop) {
+      let props = prop.split('.')
+      let temp = detail
+      for (let i = 0; i < props.length; i++) {
+        temp = temp[props[i]]
+        if (!temp) return ''
+      }
+      return temp
+    },
     timeFormat(val) {
       if (!val) return ''
-      return moment(Number(val)).format('YYYY-MM-DD HH:mm:ss')
+      return moment(val).format('YYYY-MM-DD HH:mm:ss')
     },
     parseEnum(val, mapConfig, item) {
       if (val === '' || val === undefined || val === null) {

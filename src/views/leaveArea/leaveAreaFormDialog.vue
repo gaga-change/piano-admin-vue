@@ -259,7 +259,6 @@ export default {
       } else {
         this.kind = undefined
       }
-      console.log(this.kind)
       this.searchCourse()
     },
     /** 时间改变 */
