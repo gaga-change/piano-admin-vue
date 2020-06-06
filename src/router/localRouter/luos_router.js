@@ -77,6 +77,13 @@ export default [
         meta: { title: '商品管理', noCache: false, icon: 'el-icon-document' },
         component: _import('product/productList'),
         hidden: false,
+      },
+      {
+        name: 'orderList',
+        path: 'orderList',
+        meta: { title: '订单管理', noCache: false, icon: 'el-icon-document' },
+        component: _import('order/orderList'),
+        hidden: false,
       }
     ]
   },

@@ -41,6 +41,12 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
+/** 订单接口 */
+export const ordersAdd = params => http.post(`/api/orders`, params)
+export const ordersModify = (id, params) => http.put(`/api/orders/${id}`, params)
+export const ordersDetail = id => http.get(`/api/orders/${id}`)
+export const ordersList = params => http.get(`/api/orders`, params)
+
 /** 商品接口 */
 export const productsAdd = params => http.post(`/api/products`, params).then(updateMap)
 export const productsModify = (id, params) => http.put(`/api/products/${id}`, params).then(updateMap)
