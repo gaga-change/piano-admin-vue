@@ -5,10 +5,10 @@ import Layout from '../../views/layout/Layout'
 
 export default [
   {
-    path: '/teacher',
+    path: '/user',
     component: Layout,
     redirect: 'teacherList',
-    meta: { title: '教师管理', icon: 'el-icon-setting' },
+    meta: { title: '用户管理', icon: 'el-icon-setting' },
     hidden: false,
     children: [
       {
@@ -25,15 +25,6 @@ export default [
         component: _import('teacher/teacherTotalCourse'),
         hidden: true,
       },
-    ]
-  },
-  {
-    path: '/student',
-    component: Layout,
-    redirect: 'studentList',
-    meta: { title: '学生管理', icon: 'el-icon-setting' },
-    hidden: false,
-    children: [
       {
         name: 'studentList',
         path: 'studentList',

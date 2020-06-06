@@ -96,16 +96,16 @@ import bgpath from '@/assets/images/bgimg.png'
 import qrcodeStudent from '@/assets/images/qrcode_student.jpg'
 import qrcodeTeacher from '@/assets/images/qrcode_teacher.jpg'
 let todoConfig = [
-  { name: '待审核老师', key: 'teacherReadyNum', link: '/teacher/teacherList?status=0' },
-  { name: '待审核学生', key: 'studentReadyNum', link: '/student/studentList?status=0' },
+  { name: '待审核老师', key: 'teacherReadyNum', link: '/user/teacherList?status=0' },
+  { name: '待审核学生', key: 'studentReadyNum', link: '/user/studentList?status=0' },
 ]
 let quickLinkConfig = [
   [
-    { name: '教师管理', icon: 'el-icon-tickets', link: '/teacher/teacherList' },
-    { name: '学生管理', icon: 'el-icon-tickets', link: '/student/studentList' },
+    { name: '教师管理', icon: 'el-icon-tickets', link: '/user/teacherList' },
+    { name: '学生管理', icon: 'el-icon-tickets', link: '/user/studentList' },
   ],
   [
-    { name: '课程列表', icon: 'el-icon-tickets', link: '/teacher/courseList' },
+    { name: '课程列表', icon: 'el-icon-tickets', link: '/course/courseList' },
     { name: '新建课程', icon: 'el-icon-edit-outline', link: '/course/autoCrateCourse' },
   ]
 ]
