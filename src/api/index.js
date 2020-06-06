@@ -1,6 +1,12 @@
 import http from './http'
 import store from '../store'
 
+/** 更新字典 */
+const updateMap = res => {
+  store.dispatch('gitMap')
+  return res
+}
+
 /** 获取所有枚举（简化字段） */
 export const enumsTotal = params => http.get('/api/enums/enumsTotal', params)
 
@@ -35,6 +41,12 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
+/** 商品接口 */
+export const productsAdd = params => http.post(`/api/products`, params).then(updateMap)
+export const productsModify = (id, params) => http.put(`/api/products/${id}`, params).then(updateMap)
+export const productsDetail = id => http.get(`/api/products/${id}`)
+export const productsList = params => http.get(`/api/products`, params)
+
 /** 工资规则接口 */
 export const bonusRulesAdd = params => http.post(`/api/bonusRules`, params)
 export const bonusRulesDel = id => http.delete(`/api/bonusRules/${id}`)
@@ -58,38 +70,20 @@ export const leaveAreasDetail = id => http.get(`/api/leaveAreas/${id}`)
 export const leaveAreasList = params => http.get(`/api/leaveAreas`, params)
 
 /** 教师类型 */
-export const teacherTypesAdd = params => http.post(`/api/teacherTypes`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
-export const teacherTypesModify = (id, params) => http.put(`/api/teacherTypes/${id}`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
+export const teacherTypesAdd = params => http.post(`/api/teacherTypes`, params).then(updateMap)
+export const teacherTypesModify = (id, params) => http.put(`/api/teacherTypes/${id}`, params).then(updateMap)
 export const teacherTypesDetail = id => http.get(`/api/teacherTypes/${id}`)
 export const teacherTypesList = params => http.get(`/api/teacherTypes`, params)
 
 /** 课时长 */
-export const classTimesAdd = params => http.post(`/api/classTimes`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
-export const classTimesModify = (id, params) => http.put(`/api/classTimes/${id}`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
+export const classTimesAdd = params => http.post(`/api/classTimes`, params).then(updateMap)
+export const classTimesModify = (id, params) => http.put(`/api/classTimes/${id}`, params).then(updateMap)
 export const classTimesDetail = id => http.get(`/api/classTimes/${id}`)
 export const classTimesList = params => http.get(`/api/classTimes`, params)
 
 /** 课类别 */
-export const classTypesAdd = params => http.post(`/api/classTypes`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
-export const classTypesModify = (id, params) => http.put(`/api/classTypes/${id}`, params).then(res => {
-  store.dispatch('gitMap')
-  return res
-})
+export const classTypesAdd = params => http.post(`/api/classTypes`, params).then(updateMap)
+export const classTypesModify = (id, params) => http.put(`/api/classTypes/${id}`, params).then(updateMap)
 export const classTypesDetail = id => http.get(`/api/classTypes/${id}`)
 export const classTypesList = params => http.get(`/api/classTypes`, params)
 

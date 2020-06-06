@@ -65,6 +65,22 @@ export default [
     ]
   },
   {
+    path: '/order',
+    component: Layout,
+    redirect: 'productList',
+    meta: { title: '商品和订单', icon: 'el-icon-setting' },
+    hidden: false,
+    children: [
+      {
+        name: 'productList',
+        path: 'productList',
+        meta: { title: '商品管理', noCache: false, icon: 'el-icon-document' },
+        component: _import('product/productList'),
+        hidden: false,
+      }
+    ]
+  },
+  {
     path: '/share',
     component: Layout,
     redirect: 'shareList',
