@@ -46,6 +46,7 @@ export const ordersAdd = params => http.post(`/api/orders`, params)
 export const ordersModify = (id, params) => http.put(`/api/orders/${id}`, params)
 export const ordersDetail = id => http.get(`/api/orders/${id}`)
 export const ordersList = params => http.get(`/api/orders`, params)
+export const findByStudentAndNoComplete = params => http.get(`/api/orders/findByStudentAndNoComplete`, params)
 
 /** 商品接口 */
 export const productsAdd = params => http.post(`/api/products`, params).then(updateMap)

@@ -60,6 +60,7 @@ const tableConfig = [
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap" },
   { label: "课类别", prop: "classType.name" },
   { label: "课时长", prop: "classTime.name" },
+  { label: "订单", prop: "order.product.name" },
   { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
   { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
   { label: "备注", prop: "remark" }

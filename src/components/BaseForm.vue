@@ -85,6 +85,23 @@
           </el-date-picker>
           <el-select
             style="width: 200px"
+            v-else-if="item.type === 'select'"
+            v-model="formData[item.prop]"
+            filterable
+            placeholder="请输入关键词"
+            :loading="item.loading"
+            @focus="() => item.focus(formData)"
+          >
+            <el-option
+              v-for="item in item.list"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <el-select
+            style="width: 200px"
             v-else-if="item.type === 'selectRemote'"
             v-model="formData[item.prop]"
             filterable
@@ -93,6 +110,7 @@
             placeholder="请输入关键词"
             :remote-method="item.remoteMethod"
             :loading="item.loading"
+            @change="v=> handleChange(v, item)"
           >
             <el-option
               v-for="item in item.list"
@@ -180,6 +198,10 @@ export default {
     this.init()
   },
   methods: {
+    handleChange(v, item) {
+      // console.log(item, '??')
+      item.change && item.change(v)
+    },
     init() {
       const temp = this.$copy(this.formData)
       this.config.forEach(item => {

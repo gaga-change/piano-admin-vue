@@ -90,12 +90,12 @@ export default {
             ? item.default
             : this.rowData[item.prop];
       });
-      let timeFormItem = this.formConfig.find(v => v.prop === 'time')
-      if (this.rowData._id) {
-        timeFormItem.disabled = true
-      } else {
-        timeFormItem.disabled = false
-      }
+      // let timeFormItem = this.formConfig.find(v => v.prop === 'time')
+      // if (this.rowData._id) {
+      //   timeFormItem.disabled = true
+      // } else {
+      //   timeFormItem.disabled = false
+      // }
       this.$nextTick(() => {
         this.$refs["form"].init();
       });

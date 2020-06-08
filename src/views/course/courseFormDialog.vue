@@ -51,7 +51,8 @@ const formConfig = [
   },
   { label: "开始时间", prop: "startTime", type: 'timePicker', format: 'HH:mm' },
   { label: "教师", prop: "teacher", type: 'selectRemote', list: [], default: undefined, loading: false, remoteMethod: undefined },
-  { label: "学生", prop: "student", type: 'selectRemote', list: [], default: undefined, loading: false, remoteMethod: undefined },
+  { label: "学生", prop: "student", type: 'selectRemote', list: [], default: undefined, loading: false, remoteMethod: undefined, change: undefined },
+  { label: "订单", prop: "order", type: 'select', list: [], default: undefined, loading: false, focus: undefined },
   { label: "状态", prop: "status", type: "enum", enum: "courseStatusMap", default: 0 },
   { label: "课类别", prop: "classType", type: "enum", enum: "classType" },
   { label: "课时长", prop: "classTime", type: "enum", enum: "classTime" },
@@ -90,7 +91,7 @@ const rules = {
       @submited="getTableData()"
     />
  */
-import { coursesAdd, coursesModify, teachersList, studentsList } from "@/api";
+import { coursesAdd, coursesModify, teachersList, studentsList, findByStudentAndNoComplete } from "@/api";
 export default {
   props: {
     visible: {
@@ -141,6 +142,15 @@ export default {
             item.default = undefined
           }
         }
+        if (item.prop === 'order') {
+          if (typeof this.rowData.order === 'object') {
+            item.list = [{ label: this.rowData.order.product.name, value: this.rowData.order._id }]
+            item.default = this.rowData.order._id
+          } else {
+            item.list = []
+            item.default = undefined
+          }
+        }
       });
       const teacherConfig = this.formConfig.find(v => v.prop === 'teacher')
       teacherConfig.loading = false
@@ -169,6 +179,23 @@ export default {
             value: v._id
           }))
         })
+      }
+      const orderConfig = this.formConfig.find(v => v.prop === 'order')
+      orderConfig.focus = (formData) => {
+        if (!formData.student)
+          this.$message.warning("请先选择学生！")
+      }
+      studentConfig.change = (v) => {
+        if (v) {
+          findByStudentAndNoComplete({ student: v }).then(res => {
+            orderConfig.list = res.map(v => ({
+              label: v.product.name,
+              value: v._id
+            }))
+          })
+        } else {
+          orderConfig.list = []
+        }
       }
       this.$nextTick(() => {
         this.$refs["form"].init();
