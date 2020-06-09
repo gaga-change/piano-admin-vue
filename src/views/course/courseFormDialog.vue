@@ -188,6 +188,7 @@ export default {
       studentConfig.change = (v) => {
         if (v) {
           findByStudentAndNoComplete({ student: v }).then(res => {
+            if (!res) return
             orderConfig.list = res.map(v => ({
               label: v.product && v.product.name,
               value: v._id
