@@ -88,6 +88,7 @@
             v-else-if="item.type === 'select'"
             v-model="formData[item.prop]"
             filterable
+            clearable
             placeholder="请输入关键词"
             :loading="item.loading"
             @focus="() => item.focus(formData)"
@@ -107,6 +108,7 @@
             filterable
             remote
             reserve-keyword
+            clearable
             placeholder="请输入关键词"
             :remote-method="item.remoteMethod"
             :loading="item.loading"
@@ -213,7 +215,13 @@ export default {
     /** 确定 */
     validate(callback) {
       this.$refs['form'].validate((valid) => {
-        callback(valid, { ...this.formData })
+        const temp = { ...this.formData }
+        // Object.keys(temp).forEach(key => {
+        //   if (temp[key] === '') {
+        //     temp[key] = undefined
+        //   }
+        // })
+        callback(valid, temp)
       })
     },
     resetFields() {

@@ -143,7 +143,7 @@ export default {
           }
         }
         if (item.prop === 'order') {
-          if (typeof this.rowData.order === 'object') {
+          if (this.rowData.order && typeof this.rowData.order === 'object') {
             item.list = [{ label: this.rowData.order.product.name, value: this.rowData.order._id }]
             item.default = this.rowData.order._id
           } else {
@@ -189,13 +189,16 @@ export default {
         if (v) {
           findByStudentAndNoComplete({ student: v }).then(res => {
             orderConfig.list = res.map(v => ({
-              label: v.product.name,
+              label: v.product && v.product.name,
               value: v._id
             }))
           })
         } else {
           orderConfig.list = []
         }
+      }
+      if (this.rowData.student && this.rowData.student._id) {
+        studentConfig.change(this.rowData.student._id)
       }
       this.$nextTick(() => {
         this.$refs["form"].init();
@@ -217,6 +220,9 @@ export default {
       this.$refs["form"].validate((valid, params) => {
         if (valid) {
           params = { ...params }
+          if(params.order === '') {
+            params.order = null
+          }
           let { startTime, date } = params
           startTime = new Date(startTime)
           date = new Date(date)
