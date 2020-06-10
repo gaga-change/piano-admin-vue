@@ -6,18 +6,18 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
-      :controlWidth="240"
+      :controlWidth="80"
     >
       <template slot-scope="scope">
-        <el-link
-          type="primary"
-          @click="
-                    selectedRow = scope.row;
-                    studentFormDialogVisible = true;
-                  "
-        >修改
-        </el-link>
-        <el-divider direction="vertical"></el-divider>
+<!--        <el-link-->
+<!--          type="primary"-->
+<!--          @click="-->
+<!--                    selectedRow = scope.row;-->
+<!--                    studentFormDialogVisible = true;-->
+<!--                  "-->
+<!--        >修改-->
+<!--        </el-link>-->
+<!--        <el-divider direction="vertical"></el-divider>-->
         <el-link
           :type="scope.row.cancel ? 'primary': 'warning'"
           @click="handleDelete(scope.row)"
@@ -65,6 +65,7 @@
     {label: "教师", prop: "teacher.name"},
     {label: "课类别", prop: "classType.name"},
     {label: "课时长", prop: "classTime.name"},
+    {label: "推送教师类型", prop: "teacherTypes", type: "enums", enum: "teacherType", width: 200},
     {label: "状态", prop: "cancel", type: "enum", enum: "cancelEnum"},
     {label: "订单", prop: "order.product.name"},
     {label: "创建时间", prop: "createdAt", type: "time", width: 140},

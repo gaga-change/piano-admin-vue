@@ -20,6 +20,7 @@
             v-model="formData[item.prop]"
             :disabled="item.disabled"
             :enumName="item.enum"
+            :multiple="item.multiple || false"
           />
           <!-- 多行文本框 -->
           <el-input
@@ -63,7 +64,8 @@
               v-for="item in mapConfig[item.enum]"
               :key="item.value"
               :label="item.value"
-            >{{item.name}}</el-radio>
+            >{{item.name}}
+            </el-radio>
           </el-radio-group>
           <el-time-picker
             style="width: 200px"
@@ -77,7 +79,6 @@
             style="width: 200px"
             v-else-if="item.type === 'datePicker'"
             v-model="formData[item.prop]"
-            align="right"
             type="date"
             placeholder="选择日期"
             :picker-options="item.pickerOptions || {}"
@@ -151,7 +152,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 // rules: {
 //  ... 表单校验
 // packageDesc: [
@@ -182,8 +183,7 @@ export default {
   },
   data() {
     return {
-      formData: {
-      },
+      formData: {},
     }
   },
   computed: {
@@ -215,7 +215,7 @@ export default {
     /** 确定 */
     validate(callback) {
       this.$refs['form'].validate((valid) => {
-        const temp = { ...this.formData }
+        const temp = {...this.formData}
         // Object.keys(temp).forEach(key => {
         //   if (temp[key] === '') {
         //     temp[key] = undefined

@@ -157,156 +157,157 @@
 
 <script>
 
-import moment from 'moment';
-import { mapGetters } from 'vuex'
+  import moment from 'moment';
+  import {mapGetters} from 'vuex'
 
-export default {
-  props: {
-    /** 是否扩展 */
-    expand: {
-      type: Boolean,
-      default: false,
+  export default {
+    props: {
+      /** 是否扩展 */
+      expand: {
+        type: Boolean,
+        default: false,
+      },
+      /** 表格api接口 */
+      api: {
+        type: Function,
+        default: null,
+      },
+      /** 表格api接口 -  解析接口返回的数据。 */
+      parseData: {
+        type: Function,
+        default: null,
+      },
+      /** 表格api接口 - 搜索条件 */
+      searchParams: {
+        type: Object,
+        default: () => {
+        }
+      },
+      /** 是否可多选 */
+      select: {
+        type: Boolean,
+        default: false,
+      },
+      /** 多选框 可选条件 */
+      selectable: {
+        type: Function,
+        default: () => true
+      },
+      /** 是否展示序号 */
+      showIndex: {
+        type: Boolean,
+        default: false
+      },
+      /** 显示 【操作】 */
+      showControl: {
+        type: Boolean,
+        default: false
+      },
+      /** 操作栏 是否固定右侧 */
+      showControlFixed: {
+        type: Boolean,
+        default: true
+      },
+      /** 显示 【操作】 - 更改名称 */
+      controlName: {
+        type: String,
+        default: '操作'
+      },
+      /** 显示 【操作】 - 宽度 */
+      controlWidth: {
+        type: Number,
+        default: 160
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      highlightCurrentRow: {
+        type: Boolean,
+        default: false
+      },
+      showSummary: {
+        type: Boolean,
+        defalut: false
+      },
+      summaryMethod: {
+        type: Function,
+        default: () => {
+        }
+      },
+      data: {
+        type: Array,
+        default: () => []
+      },
+      config: {
+        type: Array,
+        default: () => []
+      },
+      pageSizes: {
+        type: Array,
+        default: () => [10, 20, 30, 50]
+      },
+      layout: {
+        type: String,
+        default: "total, sizes, prev, pager, next, jumper"
+      },
+      elementLoadingText: {
+        type: String,
+        default: "加载中"
+      },
+      elementLoadingBackground: {
+        type: String,
+        default: "rgba(255, 255, 255, 0.5)"
+      },
+      border: {
+        type: Boolean,
+        default: true
+      },
+      tableStyle: {
+        type: String,
+        default: "width: 100%"
+      },
+      paginationStyle: {
+        type: String,
+        default: "marginTop:16px"
+      }
     },
-    /** 表格api接口 */
-    api: {
-      type: Function,
-      default: null,
+    data() {
+      return {
+        tableConfig: [],
+        selfTotal: 0,
+        selfPageSize: 10,
+        selfCurrentPage: 1,
+        selfLoading: true,
+      }
     },
-    /** 表格api接口 -  解析接口返回的数据。 */
-    parseData: {
-      type: Function,
-      default: null,
+    computed: {
+      ...mapGetters([
+        'mapConfig',
+      ])
     },
-    /** 表格api接口 - 搜索条件 */
-    searchParams: {
-      type: Object,
-      default: () => { }
+    watch: {
+      config() {
+        this.turnConfig()
+      }
     },
-    /** 是否可多选 */
-    select: {
-      type: Boolean,
-      default: false,
+    mounted() {
+      if (this.api) {
+        this.fetchData()
+      }
     },
-    /** 多选框 可选条件 */
-    selectable: {
-      type: Function,
-      default: () => true
-    },
-    /** 是否展示序号 */
-    showIndex: {
-      type: Boolean,
-      default: false
-    },
-    /** 显示 【操作】 */
-    showControl: {
-      type: Boolean,
-      default: false
-    },
-    /** 操作栏 是否固定右侧 */
-    showControlFixed: {
-      type: Boolean,
-      default: true
-    },
-    /** 显示 【操作】 - 更改名称 */
-    controlName: {
-      type: String,
-      default: '操作'
-    },
-    /** 显示 【操作】 - 宽度 */
-    controlWidth: {
-      type: Number,
-      default: 160
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    highlightCurrentRow: {
-      type: Boolean,
-      default: false
-    },
-    showSummary: {
-      type: Boolean,
-      defalut: false
-    },
-    summaryMethod: {
-      type: Function,
-      default: () => { }
-    },
-    data: {
-      type: Array,
-      default: () => []
-    },
-    config: {
-      type: Array,
-      default: () => []
-    },
-    pageSizes: {
-      type: Array,
-      default: () => [10, 20, 30, 50]
-    },
-    layout: {
-      type: String,
-      default: "total, sizes, prev, pager, next, jumper"
-    },
-    elementLoadingText: {
-      type: String,
-      default: "加载中"
-    },
-    elementLoadingBackground: {
-      type: String,
-      default: "rgba(255, 255, 255, 0.5)"
-    },
-    border: {
-      type: Boolean,
-      default: true
-    },
-    tableStyle: {
-      type: String,
-      default: "width: 100%"
-    },
-    paginationStyle: {
-      type: String,
-      default: "marginTop:16px"
-    }
-  },
-  data() {
-    return {
-      tableConfig: [],
-      selfTotal: 0,
-      selfPageSize: 10,
-      selfCurrentPage: 1,
-      selfLoading: true,
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'mapConfig',
-    ])
-  },
-  watch: {
-    config(val) {
+    beforeMount() {
       this.turnConfig()
-    }
-  },
-  mounted() {
-    if (this.api) {
-      this.fetchData()
-    }
-  },
-  beforeMount() {
-    this.turnConfig()
-  },
-  methods: {
-    turnConfig() {
-      let tableConfig = this.$copy(this.config)
-      tableConfig.forEach(configItem => {
-        if (configItem.type) {
-          switch (configItem.type) {
-            case 'enum':
-              {
+    },
+    methods: {
+      turnConfig() {
+        let tableConfig = this.$copy(this.config)
+        tableConfig.forEach(configItem => {
+          if (configItem.type) {
+            switch (configItem.type) {
+              case 'enum': {
                 if (typeof configItem.enum === 'string') {
-                  configItem.formatter = (row, column, cellValue, index) => {
+                  configItem.formatter = (row, column, cellValue) => {
                     let res = cellValue
                     if (!configItem.enum) {
                       console.error(`列【${configItem.label} : ${configItem.prop}】,需要 【enum】字段`)
@@ -315,7 +316,7 @@ export default {
                       if (!enumArr.length && Object.keys(this.mapConfig).length) {
                         console.error(`枚举异常, 【${configItem.enum}】未配置`)
                       }
-                      let temp = enumArr.find(v => v.value == cellValue)
+                      let temp = enumArr.find(v => v.value === this.$turnNumber(cellValue))
                       if (temp) {
                         res = temp.name
                       } else {
@@ -326,12 +327,12 @@ export default {
                     return res
                   }
                 } else {
-                  configItem.formatter = (row, column, cellValue, index) => {
+                  configItem.formatter = (row, column, cellValue) => {
                     let res = cellValue
                     if (!configItem.enum) {
                       console.error(`列【${configItem.label} : ${configItem.prop}】,需要 【enum】字段`)
                     } else {
-                      let temp = configItem.enum.find(v => v.value == cellValue)
+                      let temp = configItem.enum.find(v => v.value === this.$turnNumber(cellValue))
                       if (temp) {
                         res = temp.name
                       } else {
@@ -343,147 +344,130 @@ export default {
                   }
                 }
               }
-              break
-            case 'time':
-              configItem.formatter = (row, column, cellValue, index) => cellValue ? moment(cellValue).format(configItem.format || 'YYYY-MM-DD HH:mm:ss') : '';
-              break
-            case 'Boolean': configItem.formatter = (row, column, cellValue, index) => cellValue ? '是' : '否'
-              break
-            case 'index': configItem.formatter = (row, column, cellValue, index) => (this.selfPageSize) * (this.selfCurrentPage - 1) + index + 1
-              break
-            case 'toFixed': configItem.formatter = (row, column, cellValue, index) => cellValue && Number(Number(cellValue).toFixed(2))
-              break
-            case 'files': configItem.formatter = (row, column, cellValue, index) => {
-              let files = row.files;
-              if (!files || files.length < 1) {
-                return ''
-              }
-              return <el-dropdown>
-                <span class="el-dropdown-link">
-                  查看附件<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  {
-                    files.map((v, i) => <el-dropdown-item>
-                      <a class="el-dropdown-link" target="blank" href={v.path}>{v.name || `附件${i + 1}`}</a>
-                    </el-dropdown-item>)
-                  }
-                </el-dropdown-menu>
-              </el-dropdown>
+                break
+              case 'enums':
+                configItem.formatter = (row, column, cellValue) => {
+                  const enumArr = this.mapConfig[configItem.enum] || []
+                  return cellValue.map(id => {
+                    let temp = enumArr.find(v => v.value === id)
+                    return temp && temp.name
+                  }).filter(v => v).join('，')
+                }
+                break
+              case 'time':
+                configItem.formatter = (row, column, cellValue) => cellValue ? moment(cellValue).format(configItem.format || 'YYYY-MM-DD HH:mm:ss') : '';
+                break
+              case 'Boolean':
+                configItem.formatter = (row, column, cellValue) => cellValue ? '是' : '否'
+                break
+              case 'index':
+                configItem.formatter = (row, column, cellValue, index) => (this.selfPageSize) * (this.selfCurrentPage - 1) + index + 1
+                break
+              case 'toFixed':
+                configItem.formatter = (row, column, cellValue) => cellValue && Number(Number(cellValue).toFixed(2))
+                break
             }
-              break
+          } else if (configItem.dom) {
+            configItem.formatter = configItem.dom
+          } else {
+            configItem.formatter = (row, column, cellValue) => cellValue !== undefined && cellValue !== null && cellValue !== '' ? cellValue : ''
           }
-        }
-        else if (configItem.dom) {
-          configItem.formatter = configItem.dom
-        } else if (!!configItem.linkTo) {
-          configItem.formatter = (row, column, cellValue, index) => {
-            let json = {};
-            configItem.query && configItem.query.forEach(item => {
-              json[item.key] = row[item.value]
-            })
-            let linkTo = configItem.linkTo
-            if (configItem.linkTo.constructor === Function) {
-              linkTo = configItem.linkTo(row)
-            }
-            return <router-link to={{ path: linkTo, query: json }} style={{ color: '#3399ea' }}>{configItem.linkText ? configItem.linkText : cellValue}</router-link>
-          }
-        } else {
-          configItem.formatter = (row, column, cellValue, index) => cellValue !== undefined && cellValue !== null && cellValue !== '' ? cellValue : ''
-        }
-      })
-      this.tableConfig = tableConfig;
-    },
-    /** 展开或收拢 所有子表 */
-    toggleRowExpansionAll(expanded) {
-      this.data.forEach(item => {
-        this.$refs['table'].toggleRowExpansion(item, expanded)
-      })
-    },
-    /** 清除选中 */
-    clearSelection() {
-      this.$refs.table.clearSelection()
-    },
-    /** 输入框内容改变 */
-    handleInputNumberChange(row, index, item, value) {
-      this.$emit('inputNumberChange', { row, index, item, value })
-    },
-    /** 展开 行 */
-    handleExpandChange(row) {
-      this.$emit('expandChange', row)
-    },
-    fetchData() {
-      this.selfLoading = true
-      let temp = this.$copy(this.searchParams)
-      Object.keys(temp).forEach(key => {
-        if (temp[key] === undefined || temp[key] === '') {
-          delete temp[key]
-        }
-      })
-      return this.api({
-        pageNum: this.selfCurrentPage,
-        pageSize: this.selfPageSize,
-        ...temp
-      }).then(res => {
-        this.selfLoading = false
-        if (!res) return
-        let data = null
-        let total = null
-        if (this.parseData) {
-          let obj = this.parseData(res)
-          data = obj.data
-          total = obj.total
-        } else {
-          data = res.list || []
-          total = res.total
-        }
-        data.forEach(item => {
-          item._batchNoDetailLoading = false
-          item._batchNoDetail = null
         })
-        this.$emit('update:data', data)
-        this.$emit('updateList')
-        this.selfTotal = total
-      })
-    },
-    handleSelfSizeChange(val) {
-      this.selfPageSize = val
-      this.fetchData()
-    },
-    handleSelfCurrentChange(val) {
-      this.selfCurrentPage = val
-      this.fetchData()
-    },
-    /** 单选 */
-    handleCurrentRadioChange(currentRow, oldCurrentRow) {
-      this.$emit('currentChange', currentRow, oldCurrentRow)
-    },
-    /** 多选 */
-    handleSelectionChange(val) {
-      this.$emit('selectionChange', val)
-    }
-  }
-}
-</script>
-
-<style rel="stylesheet/scss" lang="scss">
-.TableIndexCom {
-  td {
-    word-break: break-word;
-  }
-  .radio-table {
-    tbody {
-      tr {
-        cursor: pointer;
+        this.tableConfig = tableConfig;
+      },
+      /** 展开或收拢 所有子表 */
+      toggleRowExpansionAll(expanded) {
+        this.data.forEach(item => {
+          this.$refs['table'].toggleRowExpansion(item, expanded)
+        })
+      },
+      /** 清除选中 */
+      clearSelection() {
+        this.$refs.table.clearSelection()
+      },
+      /** 输入框内容改变 */
+      handleInputNumberChange(row, index, item, value) {
+        this.$emit('inputNumberChange', {row, index, item, value})
+      },
+      /** 展开 行 */
+      handleExpandChange(row) {
+        this.$emit('expandChange', row)
+      },
+      fetchData() {
+        this.selfLoading = true
+        let temp = this.$copy(this.searchParams)
+        Object.keys(temp).forEach(key => {
+          if (temp[key] === undefined || temp[key] === '') {
+            delete temp[key]
+          }
+        })
+        return this.api({
+          pageNum: this.selfCurrentPage,
+          pageSize: this.selfPageSize,
+          ...temp
+        }).then(res => {
+          this.selfLoading = false
+          if (!res) return
+          let data
+          let total
+          if (this.parseData) {
+            let obj = this.parseData(res)
+            data = obj.data
+            total = obj.total
+          } else {
+            data = res.list || []
+            total = res.total
+          }
+          data.forEach(item => {
+            item._batchNoDetailLoading = false
+            item._batchNoDetail = null
+          })
+          this.$emit('update:data', data)
+          this.$emit('updateList')
+          this.selfTotal = total
+        })
+      },
+      handleSelfSizeChange(val) {
+        this.selfPageSize = val
+        this.fetchData()
+      },
+      handleSelfCurrentChange(val) {
+        this.selfCurrentPage = val
+        this.fetchData()
+      },
+      /** 单选 */
+      handleCurrentRadioChange(currentRow, oldCurrentRow) {
+        this.$emit('currentChange', currentRow, oldCurrentRow)
+      },
+      /** 多选 */
+      handleSelectionChange(val) {
+        this.$emit('selectionChange', val)
       }
     }
   }
-}
-.ctabel {
-  width: 100%;
-  .el-radio__label {
-    display: none;
+</script>
+
+<style rel="stylesheet/scss" lang="scss">
+  .TableIndexCom {
+    td {
+      word-break: break-word;
+    }
+
+    .radio-table {
+      tbody {
+        tr {
+          cursor: pointer;
+        }
+      }
+    }
   }
-}
+
+  .ctabel {
+    width: 100%;
+
+    .el-radio__label {
+      display: none;
+    }
+  }
 </style>
 

@@ -2,6 +2,7 @@
   <el-select
     :value="selectVal"
     :disabled="disabled"
+    :multiple="multiple"
     :placeholder="`请选择`"
     style="width:200px;"
     @change="change"
@@ -27,8 +28,12 @@ export default {
     disabled: {
       type: Boolean
     },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
     value: {
-      type: [String, Number, Object, Boolean],
+      type: [String, Number, Object, Boolean, Array],
     },
     enumName: {
       type: String

@@ -44,10 +44,16 @@ Vue.prototype.$copyHour = (target, date) => {
   target.setMinutes(min)
   return target
 }
+Vue.prototype.$turnNumber = str => {
+  if (/^\d+$/.test(str)) {
+    return Number(str)
+  }
+  return str
+}
 Vue.prototype.$doubleNum = num => num < 10 ? `0${num}` : num
 Vue.prototype.$copy = obj => cloneDeep(obj)
 Vue.prototype.$moment = moment
-Vue.prototype.$apiConfirm = (msg, api) => new Promise((resolve, reject) => {
+Vue.prototype.$apiConfirm = (msg, api) => new Promise((resolve) => {
   MessageBox.confirm(msg || '此操作将永久删除该行, 是否继续?', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
