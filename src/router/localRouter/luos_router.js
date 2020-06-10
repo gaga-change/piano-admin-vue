@@ -62,6 +62,13 @@ export default [
         component: _import('leaveArea/leaveAreaList'),
         hidden: false,
       },
+      {
+        name: 'takeCourseList',
+        path: 'takeCourseList',
+        meta: { title: '抢课管理', noCache: false, icon: 'el-icon-document' },
+        component: _import('takeCourse/takeCourseList'),
+        hidden: false,
+      },
     ]
   },
   {
