@@ -41,7 +41,7 @@ export const studentsModify = (id, params) => http.put(`/api/students/${id}`, pa
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
 
-/** 学生接口 */
+/** 抢课单接口 */
 export const takeCoursesAdd = params => http.post(`/api/takeCourses`, params)
 // export const takeCoursesDel = id => http.delete(`/api/takeCourses/${id}`)
 export const takeCoursesModify = (id, params) => http.put(`/api/takeCourses/${id}`, params)
