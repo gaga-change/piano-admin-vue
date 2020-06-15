@@ -1,7 +1,7 @@
 <template>
   <div class="top-container">
     <div class="logo">
-      <img :src="logoPath" />
+      <img :src="logoPath" style="height: 50px; margin-top: 5px;" />
     </div>
     <div class="plant-text">
       后台管理系统{{development ? '【开发环境】': ''}}
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import logoPath from '@/assets/images/logo.png'
+import logoPath from '@/assets/images/carry-logo.png'
 import { mapGetters } from 'vuex'
 import { logout } from '@/api'
 export default {
