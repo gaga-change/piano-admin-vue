@@ -311,15 +311,7 @@
     watch: {
       checkStudent(val) {
         if (val) {
-          this.orderListLoading = true
-          findByStudentAndNoComplete({student: val}).then(res => {
-            this.orderListLoading = false
-            if (!res) return
-            this.orderList = res.map(v => ({
-              label: v.product && v.product.name,
-              value: v._id
-            }))
-          })
+          this.initOrderList()
         } else {
           this.orderList = []
         }
@@ -330,7 +322,17 @@
       this.teacherConfig.remoteMethod()
     },
     methods: {
-
+      initOrderList() {
+        this.orderListLoading = true
+        findByStudentAndNoComplete({student: this.checkStudent}).then(res => {
+          this.orderListLoading = false
+          if (!res) return
+          this.orderList = res.map(v => ({
+            label: v.product && v.product.name,
+            value: v._id
+          }))
+        })
+      },
       submit() {
         this.$refs['form'].validate((valid) => {
           if (valid) {
@@ -461,6 +463,9 @@
       if (!this.$store.state.tagsView.isNew) {
         this.baseChange()
         this.formData.classType = undefined
+        if (this.checkStudent) {
+          this.initOrderList()
+        }
       }
     },
   }
