@@ -145,13 +145,13 @@ export default [
         component: _import('dict/bonusRule/bonusRuleList'),
         hidden: false,
       },
-      {
-        name: 'settingPage',
-        path: 'settingPage',
-        meta: { title: '系统设置', noCache: true, icon: 'el-icon-monitor' },
-        component: _import('setting/settingPage'),
-        hidden: false,
-      },
+      // {
+      //   name: 'settingPage',
+      //   path: 'settingPage',
+      //   meta: { title: '系统设置', noCache: true, icon: 'el-icon-monitor' },
+      //   component: _import('setting/settingPage'),
+      //   hidden: false,
+      // },
     ]
   },
 ]
