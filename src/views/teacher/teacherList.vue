@@ -6,7 +6,7 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
-      :controlWidth="300"
+      :controlWidth="260"
     >
       <template slot-scope="scope">
         <el-link
@@ -37,11 +37,11 @@
           type="primary"
           @click="$router.push({name: 'teacherTotalCourse', query: {id: scope.row._id}})"
         >课程统计</el-link>
-        <el-divider direction="vertical"></el-divider>
-        <el-link
-          type="primary"
-          @click="handleDelete(scope.row)"
-        >删除</el-link>
+<!--        <el-divider direction="vertical"></el-divider>-->
+<!--        <el-link-->
+<!--          type="primary"-->
+<!--          @click="handleDelete(scope.row)"-->
+<!--        >删除</el-link>-->
       </template>
       <template slot="btns">
         <el-button

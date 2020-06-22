@@ -6,7 +6,7 @@
       :searchConfig="searchConfig"
       :api="listApi"
       :showControl="true"
-      :controlWidth="240"
+      :controlWidth="200"
     >
       <template slot-scope="scope">
         <el-link
@@ -32,11 +32,11 @@
             tableTimeDialogVisible = true;
           "
         >课表</el-link>
-        <el-divider direction="vertical"></el-divider>
-        <el-link
-          type="primary"
-          @click="handleDelete(scope.row)"
-        >删除</el-link>
+<!--        <el-divider direction="vertical"></el-divider>-->
+<!--        <el-link-->
+<!--          type="primary"-->
+<!--          @click="handleDelete(scope.row)"-->
+<!--        >删除</el-link>-->
       </template>
       <template slot="btns">
         <el-button
