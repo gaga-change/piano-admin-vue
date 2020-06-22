@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { studentsList, studentsDel } from "@/api";
+import { studentsList } from "@/api";
 import studentFormDialog from "./studentFormDialog";
 import setSpaceRuleDialog from "../teacher/setSpaceRuleDialog"
 import TableTimeDialog from "@/components/TableTimeDialog"
@@ -129,13 +129,13 @@ export default {
       this.$router.push({ path: "/qualityTesting/create" });
     },
     /** 删除 */
-    handleDelete(row) {
-      this.$apiConfirm(`是否确定删除【${row.name}】？`, () => studentsDel(row._id)).then(res => {
-        if (!res) return
-        this.$message.success('操作成功！')
-        this.getTableData()
-      })
-    }
+    // handleDelete(row) {
+    //   this.$apiConfirm(`是否确定删除【${row.name}】？`, () => studentsDel(row._id)).then(res => {
+    //     if (!res) return
+    //     this.$message.success('操作成功！')
+    //     this.getTableData()
+    //   })
+    // }
   },
   activated() {
     if (!this.$store.state.tagsView.isNew) {

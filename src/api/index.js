@@ -16,14 +16,12 @@ export const personDetail = id => http.get(`/api/persons/${id}`)
 
 /** 老师接口 */
 export const teachersAdd = params => http.post(`/api/teachers`, params)
-export const teachersDel = id => http.delete(`/api/teachers/${id}`)
 export const teachersModify = (id, params) => http.put(`/api/teachers/${id}`, params)
 export const teachersDetail = id => http.get(`/api/teachers/${id}`)
 export const teachersList = params => http.get(`/api/teachers`, params)
 
 /** 课程接口 */
 export const coursesAdd = params => http.post(`/api/courses`, params)
-export const coursesDel = id => http.delete(`/api/courses/${id}`)
 export const coursesModify = (id, params) => http.put(`/api/courses/${id}`, params)
 export const coursesDetail = id => http.get(`/api/courses/${id}`)
 export const coursesList = params => http.get(`/api/courses`, params)
@@ -36,7 +34,6 @@ export const coursesFindByPersonAndMonth = params => http.get(`/api/courses/find
 
 /** 学生接口 */
 export const studentsAdd = params => http.post(`/api/students`, params)
-export const studentsDel = id => http.delete(`/api/students/${id}`)
 export const studentsModify = (id, params) => http.put(`/api/students/${id}`, params)
 export const studentsDetail = id => http.get(`/api/students/${id}`)
 export const studentsList = params => http.get(`/api/students`, params)
@@ -63,7 +60,6 @@ export const productsList = params => http.get(`/api/products`, params)
 
 /** 工资规则接口 */
 export const bonusRulesAdd = params => http.post(`/api/bonusRules`, params)
-export const bonusRulesDel = id => http.delete(`/api/bonusRules/${id}`)
 export const bonusRulesModify = (id, params) => http.put(`/api/bonusRules/${id}`, params)
 export const bonusRulesDetail = id => http.get(`/api/bonusRules/${id}`)
 export const bonusRulesList = params => http.get(`/api/bonusRules`, params)
