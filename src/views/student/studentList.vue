@@ -81,8 +81,11 @@ import setSpaceRuleDialog from "../teacher/setSpaceRuleDialog"
 import TableTimeDialog from "@/components/TableTimeDialog"
 
 const tableConfig = [
-  { label: "姓名", prop: "name", width: 120 },
+  { label: "宝贝昵称", prop: "name", width: 120 },
   { label: "手机号码", prop: "phone" },
+  { label: "年龄", prop: "age" },
+  { label: "学琴年限", prop: "studyAge" },
+  { label: "乐器", prop: "instrumentStr" },
   { label: "状态", prop: "status", type: "enum", enum: "personStatusMap" },
   { label: "创建时间", prop: "createdAt", type: "time", width: 140 },
   { label: "修改时间", prop: "updatedAt", type: "time", width: 140 },
