@@ -7,7 +7,7 @@
       :api="listApi"
       :showControl="true"
       :parseData="parseData"
-      :controlWidth="160"
+      :controlWidth="120"
     >
       <template slot-scope="scope">
         <el-link
@@ -22,8 +22,9 @@
         <el-divider direction="vertical"></el-divider>
         <el-link
           type="primary"
-          @click="handleDelete(scope.row)"
-        >删除
+          @click="handleCancel(scope.row)"
+          :disabled="scope.row.status === 2"
+        >取消
         </el-link>
       </template>
       <template slot="btns">
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-  import {coursesList, coursesDel} from "@/api";
+  import {coursesList, coursesModify} from "@/api";
   import courseFormDialog from "./courseFormDialog";
 
   const tableConfig = [
@@ -108,8 +109,8 @@
         this.$router.push({path: "/qualityTesting/create"});
       },
       /** 删除 */
-      handleDelete(row) {
-        this.$apiConfirm(`是否确定删除该行？`, () => coursesDel(row._id)).then(res => {
+      handleCancel(row) {
+        this.$apiConfirm(`是否确定取消该课程？`, () => coursesModify(row._id, {status: 0})).then(res => {
           if (!res) return
           this.$message.success('操作成功！')
           this.getTableData()
