@@ -70,8 +70,10 @@ export default {
 
 .main-container-nav {
   margin: 0 !important;
-  position: sticky;
-  top: 65px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   background-color: #fff;
   z-index: 1000;
   border-bottom: 1px solid #d8dce5;
