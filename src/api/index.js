@@ -106,7 +106,7 @@ export const sharesList = params => http.get(`/api/shares`, params)
 /** 登录 */
 export const userlogin = params => http.post(`/api/auth/login`, params)
 /** 退出登录 */
-export const logout = () => http.post(`/api/auth/logout`)
+export const logout = () => http.get(`/api/auth/logout`)
 /** 获取用户信息 */
 export const getInfo = () => http.get(`/api/auth/account`)
 /** 微信标签同步 */
